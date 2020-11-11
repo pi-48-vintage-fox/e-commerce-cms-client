@@ -30,8 +30,8 @@ export default {
   name: 'Product',
   data () {
     return {
-      products: [],
-      categories: []
+      categories: [],
+      category: ''
     }
   },
   components: {
@@ -41,14 +41,7 @@ export default {
   },
   methods: {
     fetchProducts () {
-      axios
-        .get('/products')
-        .then(({ data }) => {
-          this.products = data
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      this.$store.dispatch('fetchProducts')
     },
     fetchCategories () {
       axios
@@ -59,6 +52,12 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    }
+  },
+  computed: {
+    products () {
+      return this.$store.state.products
+      // return this.$store.getters.categoryFilter(this.category)
     }
   },
   created () {

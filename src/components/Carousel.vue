@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-6">
         <div class="jumbotron jumbotron-fluid bg-transparent">
-            <h1>E-Commerce CMS</h1>
+            <h1>{{ title }}</h1>
             <p class="col-10 mt-5 text-justify d-none d-lg-block"></p>
         </div>
       </div>
@@ -46,7 +46,12 @@
 
 <script>
 export default {
-  name: 'Carousel'
+  name: 'Carousel',
+  computed: {
+    title () {
+      return this.$store.state.title
+    }
+  }
 }
 </script>
 

@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Product from '../views/Product.vue'
 import Detail from '../views/DetailProduct.vue'
 import Dashboard from '../views/Dashboard.vue'
+import Checkout from '../components/CheckoutPage.vue'
+import NotFound from '../views/NotFoundPage.vue'
 
 Vue.use(VueRouter)
 
@@ -25,8 +27,19 @@ const routes = [
   },
   {
     path: '/detail/:id',
-    name: 'Detail Product',
-    component: Detail
+    name: 'Detail',
+    component: Detail,
+    children: [
+      {
+        path: 'checkout',
+        component: Checkout
+      }
+    ]
+  },
+  {
+    path: '*',
+    name: 'not found',
+    component: NotFound
   }
 ]
 

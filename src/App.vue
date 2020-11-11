@@ -1,29 +1,16 @@
 <template>
   <div id="app">
-    <div class="two-col-container">
-      <div class="sidebar">
-      </div>
-      <div class="content">
-        <router-view></router-view>
-      </div>
+    <div class="content">
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'App'
+  name: 'App',
+  created () {
+    // this.$router.push('/')
+  }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

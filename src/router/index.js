@@ -11,37 +11,30 @@ const routes = [
     component: Home
   },
   {
-    path: '/footballPlayers',
-    name: 'Football Players',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "footballPlayers" */ '../views/FootballPlayers.vue')
-  },
-  {
-    path: '/category/:id',
-    name: 'category',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "category" */ '../views/Category.vue')
-  },
-  {
     path: '/login',
-    name: 'login',
+    name: 'Login',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
   },
   {
-    path: '/addPlayer',
-    name: 'add player',
+    path: '/addProduct',
+    name: 'AddProduct',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "addPlayer" */ '../views/AddPlayer.vue')
+    component: () => import(/* webpackChunkName: "addProduct" */ '../views/AddProduct.vue')
+  },
+  {
+    path: '/editProduct/:id',
+    name: 'EditProduct',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "editProduct/" */ '../views/EditProduct.vue')
   }
+
 ]
 
 const router = new VueRouter({
@@ -51,9 +44,10 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log(to.name, localStorage.access_token,"<<<<====")
-   if (to.name !== "login" && !localStorage.access_token) {
-    next({ path: "/login" })
+  if (to.name !== 'Login' && !localStorage.access_token) {
+    next({ path: '/login' })
+  } else if (to.name === 'Login' && localStorage.access_token) {
+    next({ path: '/' })
   } else {
     next()
   }

@@ -1,19 +1,22 @@
 <template>
   <nav class="bg-dark sidebar">
       <div class="sidebar">
-        <router-link to="/">Home</router-link>
-        <router-link to="/footballPlayers">Football players</router-link>
+        <router-link to="/">Dashboard</router-link>
         <router-link to="/login">login</router-link>
       </div>
-      <router-link to="/login"><a href="#" @click="logout">logout</a></router-link>
+      <div class="mt-5 text-primary">
+      <div type="button" @click="logout">logout</div>
+      </div>
     </nav>
 </template>
 
 <script>
 export default {
+  name: 'Navbar',
   methods: {
     logout () {
       localStorage.clear()
+      this.$router.push({ path: '/login' })
     }
   }
 

@@ -10,6 +10,7 @@
         class="form-control"
         id="exampleInputEmail1"
         aria-describedby="emailHelp"
+        v-model="email"
       />
       <small id="emailHelp" class="form-text text-muted"
         >We'll never share your email with anyone else.</small
@@ -21,22 +22,35 @@
         type="password"
         class="form-control"
         id="exampleInputPassword1"
+        v-model="password"
       />
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Login</button>
   </form>
 </template>
 
 <script>
 export default {
-  name: "login",
-  data() {
+  name: 'Login',
+  data () {
     return {
-      email: "",
-      password: "",
-    };
+      email: '',
+      password: ''
+    }
   },
-};
+  methods: {
+    login () {
+      const user = {
+        email: this.email,
+        password: this.password
+      }
+      this.$store.dispatch('login', user)
+        .then(data => {
+          this.$router.push({ path: '/' })
+        })
+    }
+  }
+}
 </script>
 
 <style>

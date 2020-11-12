@@ -53,7 +53,11 @@ export default {
         .then(({ data }) => {
           this.$router.push(`/detail/${id}/checkout`)
         })
-        .catch(console.log)
+        .catch(err => {
+          if (err.response.status === 500) {
+            this.$router.push({ name: 'Login' })
+          }
+        })
     }
   },
   computed: {

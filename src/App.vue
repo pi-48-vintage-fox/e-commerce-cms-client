@@ -9,10 +9,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <router-link to="/" class="nav-link">Home</router-link>
-            </li>
-            <li class="nav-item">
               <router-link to="/dashboard" class="nav-link">Dashboard</router-link>
+            </li>
+            <li v-if="!access_token" class="nav-item">
+              <router-link to="/login" class="nav-link">Login</router-link>
             </li>
           </ul>
         </div>
@@ -21,6 +21,16 @@
     <router-view/>
   </div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      access_token: localStorage.getItem('access_token')
+    }
+  }
+}
+</script>
 
 <style>
 #app {

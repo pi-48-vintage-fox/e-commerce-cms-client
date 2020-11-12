@@ -50,6 +50,9 @@ export default new Vuex.Store({
         method: 'PATCH',
         data: {
           stock: +payload.stock
+        },
+        headers: {
+          access_token: localStorage.getItem('access_token')
         }
       })
     }

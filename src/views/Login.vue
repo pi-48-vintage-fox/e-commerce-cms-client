@@ -40,11 +40,21 @@ export default {
       })
         .then(({ data }) => {
           localStorage.setItem('access_token', data.access_token)
+          localStorage.setItem('role', data.role)
           this.$router.push({ name: 'Product' })
+          location.reload()
         })
         .catch(err => {
           console.log(err.response)
         })
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    const accessToken = localStorage.getItem('access_token')
+    if (accessToken) {
+      next({ name: 'Product' })
+    } else {
+      next()
     }
   }
 }

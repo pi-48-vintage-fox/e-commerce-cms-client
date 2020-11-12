@@ -8,6 +8,8 @@ import Detail from '../views/DetailProduct.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Checkout from '../components/CheckoutPage.vue'
 import NotFound from '../views/NotFoundPage.vue'
+import ProductDashboard from '../views/ProductDashboard.vue'
+import CategoryDashboard from '../views/CategoryDashboard'
 
 Vue.use(VueRouter)
 
@@ -35,7 +37,19 @@ const routes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: Dashboard
+    component: Dashboard,
+    children: [
+      {
+        name: 'ProductDashboard',
+        path: 'product-list',
+        component: ProductDashboard
+      },
+      {
+        name: 'CategoryDashboard',
+        path: 'category-list',
+        component: CategoryDashboard
+      }
+    ]
   },
   {
     path: '/detail/:id',
@@ -43,6 +57,7 @@ const routes = [
     component: Detail,
     children: [
       {
+        name: 'Checkout',
         path: 'checkout',
         component: Checkout
       }

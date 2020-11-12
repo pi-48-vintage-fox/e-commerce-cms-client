@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     title: 'E-Commerce CMS',
     products: [],
-    product: {}
+    product: {},
+    categories: []
   },
   mutations: {
     getProducts (state, payload) {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     },
     getStock (state, payload) {
       state.stock = payload
+    },
+    getCategories (state, payload) {
+      state.categories = payload
     }
   },
   actions: {
@@ -27,6 +31,16 @@ export default new Vuex.Store({
         .get('/products')
         .then(({ data }) => {
           context.commit('getProducts', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    fetchCategories (context) {
+      axios
+        .get('/categories')
+        .then(({ data }) => {
+          context.commit('getCategories', data)
         })
         .catch(err => {
           console.log(err)

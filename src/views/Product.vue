@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import axios from '../axios/axiosinstance.js'
 import Carousel from '@/components/Carousel.vue'
 import ProductsPage from '@/components/ProductsPage.vue'
 import CategoriesList from '@/components/CategoriesList.vue'
@@ -30,7 +29,6 @@ export default {
   name: 'Product',
   data () {
     return {
-      categories: [],
       category: ''
     }
   },
@@ -44,20 +42,16 @@ export default {
       this.$store.dispatch('fetchProducts')
     },
     fetchCategories () {
-      axios
-        .get('/categories')
-        .then(({ data }) => {
-          this.categories = data
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      this.$store.dispatch('fetchCategories')
     }
   },
   computed: {
     products () {
       return this.$store.state.products
       // return this.$store.getters.categoryFilter(this.category)
+    },
+    categories () {
+      return this.$store.state.categories
     }
   },
   created () {

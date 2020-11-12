@@ -8,7 +8,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
-            <li class="nav-item">
+            <li v-if="role === 'admin'" class="nav-item">
               <router-link to="/dashboard" class="nav-link">Dashboard</router-link>
             </li>
             <li v-if="!access_token" class="nav-item">
@@ -26,7 +26,8 @@
 export default {
   data () {
     return {
-      access_token: localStorage.getItem('access_token')
+      access_token: localStorage.getItem('access_token'),
+      role: localStorage.getItem('role')
     }
   }
 }

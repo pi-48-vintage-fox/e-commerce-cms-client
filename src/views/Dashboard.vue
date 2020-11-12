@@ -31,13 +31,15 @@ export default {
   name: 'Dashboard',
   beforeRouteEnter (to, from, next) {
     const accessToken = localStorage.getItem('access_token')
-    var base64Url = accessToken.split('.')[1]
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-    }).join(''))
-
-    const decoded = JSON.parse(jsonPayload)
+    let decoded
+    if (accessToken) {
+      var base64Url = accessToken.split('.')[1]
+      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+      var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+      }).join(''))
+      decoded = JSON.parse(jsonPayload)
+    }
 
     if (accessToken && decoded.role === 'admin') {
       next()

@@ -14,6 +14,9 @@
             <li v-if="!access_token" class="nav-item">
               <router-link to="/login" class="nav-link">Login</router-link>
             </li>
+            <li v-if="access_token" class="nav-item">
+              <a href="/" @click="logout" class="nav-link">Logout</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -28,6 +31,11 @@ export default {
     return {
       access_token: localStorage.getItem('access_token'),
       role: localStorage.getItem('role')
+    }
+  },
+  methods: {
+    logout () {
+      localStorage.clear()
     }
   }
 }

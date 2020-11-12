@@ -7,11 +7,21 @@
           <form action="#" @submit.prevent="login">
             <div class="form-group">
               <label for="email">Email: </label>
-              <input type="email" v-model="loginEmail" id="login-email" class="form-control">
+              <input
+                type="email"
+                v-model="loginPayload.email"
+                id="login-email"
+                class="form-control"
+              />
             </div>
             <div class="form-group">
               <label for="password">Password: </label>
-              <input type="password" v-model="loginPassword" id="login-password" class="form-control">
+              <input
+                type="password"
+                v-model="loginPayload.password"
+                id="login-password"
+                class="form-control"
+              />
             </div>
             <div class="form-group">
               <button class="btn">Login</button>
@@ -24,32 +34,51 @@
 </template>
 
 <script>
-import axios from '../axios/axios'
+import Swal from 'sweetalert2'
 export default {
   name: 'LandingPage',
   data () {
     return {
       card: 'login',
-      loginEmail: '',
-      loginPassword: ''
+      loginPayload: {
+        email: '',
+        password: ''
+      }
     }
   },
   methods: {
     login () {
-      axios({
-        method: 'POST',
-        url: '/adminLogin',
-        data: {
-          email: this.loginEmail,
-          password: this.loginPassword
-        }
-      })
-        .then(result => {
-          localStorage.setItem('token', result.token)
-          this.$emit('toLogin', true)
+      const { email, password } = this.loginPayload
+      this.$store
+        .dispatch('login', { email, password })
+        .then((result) => {
+          localStorage.setItem('token', result.data.token)
+          localStorage.setItem('user', result.data.email)
+          this.$store.commit('isLogin', true)
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+
+          Toast.fire({
+            icon: 'success',
+            title: 'Signed in successfully'
+          })
+          this.$router.push('/')
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: err.response.data.message + '!'
+          })
         })
     }
   },
@@ -82,7 +111,7 @@ export default {
 
 .landing-card {
   background-color: #42b983;
-  box-shadow: 1px 1px 15px 5px rgba(0,0,0,0.65);
+  box-shadow: 1px 1px 15px 5px rgba(0, 0, 0, 0.65);
   margin: 20px;
   padding: 20px 5em;
   width: 30%;

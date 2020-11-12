@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <LandingPage v-if="!loggedIn" @toLogin="toLogin"/>
+    <LandingPage/>
   </div>
 </template>
 
@@ -11,21 +11,12 @@ export default {
   name: 'Home',
   data () {
     return {
-      loggedIn: false
     }
   },
   methods: {
-    toLogin (status) {
-      this.loggedIn = status
-    }
   },
   components: {
     LandingPage
-  },
-  created () {
-    if (localStorage.getItem('token')) {
-      this.$router.push('/about')
-    }
   }
 }
 </script>

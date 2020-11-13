@@ -29,10 +29,8 @@ export default {
   methods: {
     getOne () {
       const id = this.product.id
-      const accessToken = localStorage.getItem('access_token')
       const payload = {
-        id,
-        accessToken
+        id
       }
       this.$store.dispatch('getById', payload)
         .then(() => {
@@ -52,14 +50,14 @@ export default {
         .then((result) => {
           if (result.isConfirmed) {
             const id = this.product.id
-            const token = localStorage.getItem('access_token')
             const payload = {
-              id,
-              token
+              id
             }
             this.$store.dispatch('deleteProductById', payload)
               .then(() => {
-                this.fetchProducts()
+                return this.$store.dispatch('fetchProducts')
+              })
+              .then(() => {
                 this.$swal.fire(
                   'Deleted!',
                   'Your file has been deleted.',

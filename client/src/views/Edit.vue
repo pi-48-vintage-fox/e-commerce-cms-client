@@ -68,6 +68,9 @@ export default {
     productById () {
       return this.$store.state.product
     }
+  },
+  created () {
+    this.$store.dispatch('getById', { id: this.$route.params.id })
   }
 }
 </script>

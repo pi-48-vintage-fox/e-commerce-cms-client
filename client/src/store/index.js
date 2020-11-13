@@ -31,11 +31,11 @@ export default new Vuex.Store({
       })
     },
     fetchProducts (context, payload) {
-      axios({
+      return axios({
         url: '/products',
         method: 'GET',
         headers: {
-          access_token: payload
+          access_token: localStorage.getItem('access_token')
         }
       })
         .then(({ data }) => {
@@ -66,7 +66,7 @@ export default new Vuex.Store({
         url: '/products/' + payload.id,
         method: 'GET',
         headers: {
-          access_token: payload.accessToken
+          access_token: localStorage.access_token
         }
       })
         .then(({ data }) => {
@@ -101,7 +101,7 @@ export default new Vuex.Store({
         url: '/products/' + payload.id,
         method: 'DELETE',
         headers: {
-          access_token: payload.token
+          access_token: localStorage.access_token
         }
       })
     }

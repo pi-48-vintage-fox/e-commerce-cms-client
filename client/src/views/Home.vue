@@ -25,8 +25,7 @@ export default {
   },
   methods: {
     fetchProducts () {
-      const accessToken = localStorage.getItem('access_token')
-      this.$store.dispatch('fetchProducts', accessToken)
+      this.$store.dispatch('fetchProducts')
     }
   },
   computed: {

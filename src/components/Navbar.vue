@@ -1,11 +1,11 @@
 <template>
   <nav class="bg-dark sidebar">
       <div class="sidebar">
-        <router-link to="/">Dashboard</router-link>
-        <router-link to="/login">login</router-link>
+        <router-link v-if="this.$route.name !== 'Login'" to="/">Dashboard</router-link>
+        <router-link v-if="this.$route.name === 'Login'" to="/login">Login</router-link>
       </div>
       <div class="mt-5 text-primary">
-      <div type="button" @click="logout">logout</div>
+      <div type="button" v-if="this.$route.name !== 'Login'" @click="logout">Logout</div>
       </div>
     </nav>
 </template>

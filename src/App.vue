@@ -20,7 +20,7 @@ export default {
   },
   data () {
     return {
-      page: 'login'
+      page: false
     }
   }
 

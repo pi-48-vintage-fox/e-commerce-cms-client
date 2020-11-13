@@ -1,7 +1,7 @@
 <template>
   <div class="product">
     <Carousel/>
-    <div class="categories">
+    <div class="categories mt-5">
       <ul class="list-group">
         <CategoriesList
           v-for="category in categories" :key="category.id"
@@ -9,7 +9,7 @@
         />
       </ul>
   </div>
-    <div class="container">
+    <div class="container mt-5">
       <div class="row">
         <ProductsPage
           v-for="product in products" :key="product.id"

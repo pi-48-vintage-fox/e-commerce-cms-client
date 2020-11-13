@@ -4,10 +4,10 @@
       <div class="col-6">
         <form @submit.prevent="login">
           <div class="form-group">
-            <input v-model="userLogin.email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <input v-model="userLogin.email" type="email" class="form-control" placeholder="Enter email" aria-describedby="emailHelp" required>
           </div>
           <div class="form-group mt-5">
-            <input v-model="userLogin.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <input v-model="userLogin.password" type="password" class="form-control" placeholder="Password" required>
           </div>
           <button type="submit" class="btn btn-primary mt-5">Login</button>
         </form>

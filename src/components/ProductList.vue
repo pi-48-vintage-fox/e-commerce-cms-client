@@ -6,14 +6,19 @@
       <td>{{ product.price }}</td>
       <td>{{ product.stock }}</td>
       <td>{{ product.Category.name }}</td>
-      <td><a href="" class="fas fa-trash"></a> | <a href="" class="fas fa-edit"></a></td>
+      <td><a href="" class="fas fa-trash"></a> | <a href="#" @click.prevent="editProduct(product.id)" class="fas fa-edit"></a></td>
   </tr>
 </template>
 
 <script>
 export default {
   name: 'ProductList',
-  props: ['product']
+  props: ['product'],
+  methods: {
+    editProduct (id) {
+      this.$router.push({ path: `edit-product/${id}` })
+    }
+  }
 }
 </script>
 

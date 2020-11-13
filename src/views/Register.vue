@@ -5,10 +5,10 @@
       <h3>Register</h3>
         <form @submit.prevent="register">
           <div class="form-group">
-            <input v-model="userRegister.email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <input v-model="userRegister.email" type="email" class="form-control" required placeholder="Enter email">
           </div>
           <div class="form-group mt-5">
-            <input v-model="userRegister.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <input v-model="userRegister.password" type="password" class="form-control" required placeholder="Password">
           </div>
           <button type="submit" class="btn btn-primary mt-5">Login</button>
         </form>

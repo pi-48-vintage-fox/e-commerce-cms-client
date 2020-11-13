@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="col-6">
-        <router-view />
+        <router-view :stock="stock" :product="product" />
       </div>
     </div>
   </div>
@@ -35,13 +35,16 @@ export default {
   name: 'Detail',
   data () {
     return {
-      stock: 0
+      stock: ''
     }
   },
   methods: {
     getProductById () {
       const id = this.$route.params.id
       this.$store.dispatch('getProductById', id)
+    },
+    getStock () {
+      return this.stock
     },
     buy () {
       const id = this.$route.params.id
@@ -67,6 +70,7 @@ export default {
   },
   created () {
     this.getProductById()
+    this.getStock()
   }
 }
 </script>

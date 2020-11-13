@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+  <div class="banner">
+    <div class="container pt-5">
     <div class="row">
       <div class="col-6">
         <div class="jumbotron jumbotron-fluid bg-transparent">
@@ -41,6 +42,7 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
 </template>
 
@@ -55,7 +57,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+  .banner{
+    background-color: #ecf0f1;
+  }
   .fa-angle-left,
   .fa-angle-right {
     color: white;

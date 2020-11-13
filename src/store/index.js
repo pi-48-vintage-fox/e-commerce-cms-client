@@ -36,6 +36,39 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
+    addProduct (context, payload) {
+      const accessToken = localStorage.getItem('access_token')
+      return axios({
+        url: 'products',
+        method: 'POST',
+        data: {
+          name: payload.name,
+          image_url: payload.image_url,
+          price: payload.price,
+          stock: payload.stock,
+          CategoryId: payload.CategoryId
+        },
+        headers: {
+          access_token: accessToken
+        }
+      })
+    },
+    addCheckout (context, payload) {
+      const accessToken = localStorage.getItem('access_token')
+      return axios({
+        url: 'checkout',
+        method: 'POST',
+        data: {
+          name: payload.name,
+          address: payload.address,
+          ProductId: payload.ProductId,
+          qty: payload.qty
+        },
+        headers: {
+          access_token: accessToken
+        }
+      })
+    },
     fetchCategories (context) {
       axios
         .get('/categories')
@@ -57,6 +90,25 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+    },
+    editProduct (context, payload, id) {
+      return axios({
+        url: `/products/${+payload.id}`,
+        method: 'PUT',
+        data: {
+          name: payload.name,
+          image_url: payload.image_url,
+          price: payload.price,
+          stock: payload.stock,
+          CategoryId: payload.CategoryId
+        },
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        },
+        params: {
+          id: id
+        }
+      })
     },
     buy (context, payload) {
       return axios({

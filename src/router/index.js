@@ -10,6 +10,7 @@ import Checkout from '../components/CheckoutPage.vue'
 import NotFound from '../views/NotFoundPage.vue'
 import ProductDashboard from '../views/ProductDashboard.vue'
 import CategoryDashboard from '../views/CategoryDashboard'
+import EditProduct from '../components/EditProduct.vue'
 
 Vue.use(VueRouter)
 
@@ -40,9 +41,14 @@ const routes = [
     component: Dashboard,
     children: [
       {
-        name: 'ProductDashboard',
         path: 'product-list',
+        name: 'ProductDashboard',
         component: ProductDashboard
+      },
+      {
+        path: 'edit-product/:id',
+        name: 'EditProduct',
+        component: EditProduct
       },
       {
         name: 'CategoryDashboard',

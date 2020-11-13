@@ -39,7 +39,6 @@ export default {
   },
   methods: {
     editProduct () {
-      console.log(this.changeProduct)
       const input = {
         id: this.changeProduct.id,
         name: this.changeProduct.name,

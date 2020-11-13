@@ -16,6 +16,9 @@ export default new Vuex.Store({
     EDIT_PRODUCT (state, payload) {
       state.changeProduct = payload
       router.push({ path: `/editProduct/${payload.id}` })
+        .then(data => {
+          console.log(data)
+        })
     }
   },
   actions: {
@@ -26,7 +29,6 @@ export default new Vuex.Store({
           password: payload.password
         })
         .then(({ data }) => {
-          console.log(data)
           localStorage.setItem('access_token', data.access_token)
         })
         .catch((err) => {
@@ -41,6 +43,7 @@ export default new Vuex.Store({
           }
         })
         .then(({ data }) => {
+          data.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
           commit('FETCH_PRODUCTS', data)
         })
         .catch(err => {
@@ -62,14 +65,13 @@ export default new Vuex.Store({
           }
         })
         .then(({ data }) => {
-          router.push({ path: '/' })
+          this.fetchProducts()
         })
         .catch(err => {
           console.log(err)
         })
     },
     editProduct (context, payload) {
-      console.log(payload)
       Axios
         .put(`https://server-e-commerce.herokuapp.com/products/${payload.id}`, {
           name: payload.name,

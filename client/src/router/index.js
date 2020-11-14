@@ -6,6 +6,7 @@ import Category from '../components/Category.vue'
 import AddProduct from '../components/AddProduct.vue'
 import UpdateProduct from '../components/UpdateProduct.vue'
 import ProductCategory from '../components/ProductCategory.vue'
+import Banner from '../components/Banner.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -46,6 +47,11 @@ const routes = [
     path: '/productcategory/:id',
     name: 'ProductCategory',
     component: ProductCategory
+  },
+  {
+    path: '/banner',
+    name: 'Banner',
+    component: Banner
   }
 ]
 

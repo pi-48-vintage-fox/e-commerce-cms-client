@@ -12,6 +12,9 @@
       <li class="nav-item">
         <a class="nav-link" href="#" @click.prevent="category">List category</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" @click.prevent="banner">Banner</a>
+      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{ emailIsLogin }}
@@ -53,6 +56,9 @@ export default {
     },
     home () {
       this.$router.push('/')
+    },
+    banner () {
+      this.$router.push('/banner')
     }
   },
   created () {

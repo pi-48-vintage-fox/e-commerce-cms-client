@@ -71,9 +71,10 @@ export default {
       this.$store.dispatch('addProduct', dataModel)
         .then(() => {
           this.$router.push('/')
+          this.$store.dispatch('fetchProduct')
         })
         .catch(err => {
-          console.log(err)
+          console.log(err.response)
         })
     }
   },

@@ -8,23 +8,23 @@
                 <form v-on:submit.prevent="updateProduct">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input v-model="data.name" type="text" class="form-control" id="name">
+                    <input v-model="name" type="text" class="form-control" id="name">
                 </div>
                 <div class="form-group">
                     <label for="image_url">Image Url</label>
-                    <input v-model="data.image_url" type="text" class="form-control" id="image_url">
+                    <input v-model="image_url" type="text" class="form-control" id="image_url">
                 </div>
                 <div class="form-group">
                     <label for="price">Price</label>
-                    <input v-model="data.price" type="number" class="form-control" id="price">
+                    <input v-model="price" type="number" class="form-control" id="price">
                 </div>
                 <div class="form-group">
                     <label for="stock">Stock</label>
-                    <input v-model="data.stock" type="number" class="form-control" id="stock">
+                    <input v-model="stock" type="number" class="form-control" id="stock">
                 </div>
                 <div class="form-group">
                     <label for="category">Category</label>
-                    <select v-model="data.CategoryId" class="form-control" id="category">
+                    <select v-model="CategoryId" class="form-control" id="category">
                     <option v-for="category in categoryList"
                     :key='category.id'
                     :value="category.id"
@@ -33,7 +33,6 @@
                 </div>
                 <button class="btn btn-primary" type="submit">Submit</button>
                 </form>
-                {{ productFilter }}
               </div>
           </div>
       </div>
@@ -46,13 +45,11 @@ export default {
   name: 'UpdateProduct',
   data () {
     return {
-      data: {
-        name: this.productFilter.price,
-        image_url: '',
-        price: '',
-        stock: '',
-        CategoryId: ''
-      }
+      name: '',
+      image_url: '',
+      price: '',
+      stock: '',
+      CategoryId: ''
     }
   },
   components: {
@@ -61,38 +58,41 @@ export default {
   computed: {
     categoryList () {
       return this.$store.state.category
-    },
-    productFilter () {
-      return this.$store.state.productById
     }
   },
   methods: {
-    fetchProductById () {
-      const idParams = Number(this.$route.params.id)
-      this.$store.dispatch('fetchProductById', idParams)
-    },
     fetchCategory () {
       this.$store.dispatch('fetchCategory')
     },
     updateProduct () {
-      console.log(this.productFilter.name, 'dari product filter')
-      console.log('masuk ke update')
-      const dataProduct = {
-        dataBarang: this.data,
-        id: Number(this.$route.params.id)
+      const payload = {
+        name: this.name,
+        image_url: this.image_url,
+        price: this.price,
+        stock: this.stock,
+        CategoryId: this.CategoryId,
+        idParams: +this.$route.params.id
       }
-      this.$store.dispatch('updateProduct', dataProduct)
+      this.$store.dispatch('updateProduct', payload)
         .then(() => {
           this.$router.push('/')
+          this.$store.dispatch('fetchProduct')
         }).catch(err => {
           console.log(err.response)
         })
     }
   },
   created () {
-    this.fetchProductById()
     this.fetchCategory()
-    this.productFilter()
+    const idParams = this.$route.params.id
+    this.$store.dispatch('fetchProductById', idParams)
+      .then(({ data }) => {
+        this.name = data.name
+        this.image_url = data.image_url
+        this.price = data.price
+        this.stock = data.stock
+        this.CategoryId = data.CategoryId
+      })
   }
 }
 </script>

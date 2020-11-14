@@ -1,10 +1,11 @@
 <template>
 <div class="col-3 mt-2">
-       <div class="card">
+       <div class="card" style="max-width: 18rem" >
         <img :src="dataProduct.image_url" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ dataProduct.name }}</h5>
                 <p class="card-text">Rp. {{ formatToRupiah }},-</p>
+                <p class="card-text">Stock : {{ dataProduct.stock }}</p>
                 <p class="card-text">Category : {{ dataProduct.Category.name }}</p>
                 <a href="#" @click.prevent="updateProduct(dataProduct.id)">Edit</a>
                 ||
@@ -35,6 +36,7 @@ export default {
     },
     updateProduct (id) {
       this.$router.push(`/updateproduct/${id}`)
+      this.$store.dispatch('fetchProductById', id)
     }
   },
   computed: {

@@ -42,17 +42,11 @@ export default new Vuex.Store({
     },
     fetchProductById (context, id) {
       const accessToken = localStorage.getItem('access_token')
-      axios({
+      return axios({
         url: `/product/${id}`,
         method: 'GET',
         headers: { access_token: accessToken }
       })
-        .then(({ data }) => {
-          context.commit('setProductById', data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
     },
     fetchCategory (context) {
       const accessToken = localStorage.getItem('access_token')
@@ -82,12 +76,6 @@ export default new Vuex.Store({
           CategoryId: payload.CategoryId
         }
       })
-        .then(({ data }) => {
-          this.fetchProduct()
-        })
-        .catch(err => {
-          console.log(err)
-        })
     },
     deleteProduct (context, id) {
       const accessToken = localStorage.getItem('access_token')
@@ -118,27 +106,20 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    updateProduct (context, data) {
-      console.log(+data.dataBarang.price, 'dari store')
+    updateProduct (context, payload) {
       const accessToken = localStorage.getItem('access_token')
       return axios({
-        url: `/product/${data.id}`,
+        url: `/product/${payload.idParams}`,
         method: 'PUT',
         headers: { access_token: accessToken },
-        body: {
-          name: data.dataBarang.name,
-          image_url: data.dataBarang.image_url,
-          price: data.dataBarang.price,
-          stock: data.dataBarang.stock,
-          CategoryId: data.dataBarang.CategoryId
+        data: {
+          name: payload.name,
+          image_url: payload.image_url,
+          price: payload.price,
+          stock: payload.stock,
+          CategoryId: payload.CategoryId
         }
       })
-        .then(({ data }) => {
-          console.log(data)
-        })
-        .catch(err => {
-          console.log(err.response)
-        })
     }
   },
   modules: {

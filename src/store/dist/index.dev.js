@@ -15,8 +15,6 @@ var _router = _interopRequireDefault(require("../router"));
 
 var _helpers = require("../../helpers");
 
-var _main = _interopRequireDefault(require("../main"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 _vue["default"].use(_vuex["default"]);

@@ -4,9 +4,6 @@ import axios from '../../config/axios'
 import router from '../router'
 import { toCurrencyFormat } from '../../helpers'
 
-import toasted from '../main'
-
-
 Vue.use(Vuex)
 
 export default new Vuex.Store({

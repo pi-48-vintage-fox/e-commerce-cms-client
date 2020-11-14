@@ -45,6 +45,7 @@
 
 <script>
 import HomeNavbar from '../components/HomeNavbar'
+import swal from 'sweetalert'
 export default {
   name: 'AddProduct',
   components: {
@@ -69,6 +70,11 @@ export default {
       this.$store.dispatch('addProduct', payload)
         .then(() => {
           this.$router.push('/')
+        })
+        .catch((err) => {
+          const error = err.response.data.message
+          swal('Error', `${error}`, 'error')
+          this.$router.push('/addProduct')
         })
     }
   }

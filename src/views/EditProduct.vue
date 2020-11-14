@@ -77,7 +77,7 @@ export default {
         })
         .catch((err) => {
           const error = err.response.data.message
-          swal('Error', `${error}`, 'error');
+          swal('Error', `${error}`, 'error')
           this.$router.push(`/editProduct/${id}`)
         })
     }

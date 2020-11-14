@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from '../config/axios'
-import swal from 'sweetalert'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -66,11 +65,6 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           console.log(data)
-        })
-        .catch(err => {
-          const error = err.response.data.message
-          swal('Error', `${error}`, 'error');
-          this.$router.push('/addProduct')
         })
     },
 

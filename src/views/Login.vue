@@ -38,32 +38,32 @@
 <script>
 import swal from 'sweetalert'
 export default {
-  name: "Login",
-  data() {
+  name: 'Login',
+  data () {
     return {
-      email: "",
-      password: ""
-    };
+      email: '',
+      password: ''
+    }
   },
   methods: {
-    login() {
+    login () {
       const payload = {
         email: this.email,
         password: this.password
-      };
+      }
       this.$store
-        .dispatch("login", payload)
+        .dispatch('login', payload)
         .then(({ data }) => {
-          localStorage.setItem("access_token", data.access_token);
-          this.$router.push("/");
+          localStorage.setItem('access_token', data.access_token)
+          this.$router.push('/')
         })
         .catch(err => {
-          const error = err.response.data.message;
-          swal('Error', `${error}`, 'error');
-        });
+          const error = err.response.data.message
+          swal('Error', `${error}`, 'error')
+        })
     }
   }
-};
+}
 </script>
 
 <style>

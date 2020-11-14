@@ -35,33 +35,33 @@
 </template>
 
 <script>
-import swal from "sweetalert";
+import swal from 'sweetalert'
 export default {
-  name: "ProductCard",
-  props: ["product"],
+  name: 'ProductCard',
+  props: ['product'],
   methods: {
-    getProductById() {
-      this.$store.dispatch("getProductById", this.product.id).then(() => {
-        this.$router.push(`/editProduct/${this.product.id}`);
-      });
+    getProductById () {
+      this.$store.dispatch('getProductById', this.product.id).then(() => {
+        this.$router.push(`/editProduct/${this.product.id}`)
+      })
     },
-    deleteProduct() {
+    deleteProduct () {
       swal({
-        title: "Good job!",
+        title: 'Good job!',
         text: `${this.product.name} has been deleted!`,
-        icon: "success"
-      });
+        icon: 'success'
+      })
       this.$store
-        .dispatch("deleteProduct", this.product.id)
+        .dispatch('deleteProduct', this.product.id)
         .then(() => {
-          return this.$store.dispatch("fetchProducts");
+          return this.$store.dispatch('fetchProducts')
         })
         .catch(err => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     }
   }
-};
+}
 </script>
 
 <style>

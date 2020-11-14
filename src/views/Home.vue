@@ -228,6 +228,7 @@
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 import Product from '@/components/Product.vue'
+import Swal from 'sweetalert2'
 export default {
   name: 'Home',
   data () {
@@ -244,6 +245,14 @@ export default {
   methods: {
     logout () {
       localStorage.clear()
+      Swal.fire({
+        title: 'Good Bye!',
+        text: 'See you later',
+        imageUrl: 'https://c1.wallpaperflare.com/preview/18/673/287/goodbye-farewell-end-hessian.jpg',
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'Custom image'
+      })
       this.$router.push({ path: '/login' })
     },
     showAddForm () {

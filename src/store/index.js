@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router/index'
-// import Swal from 'sweetalert2'
+import Swal from 'sweetalert2'
 
 Vue.use(Vuex)
 
@@ -31,8 +31,21 @@ export default new Vuex.Store({
         data: payload
       })
         .then(response => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Login success',
+            showConfirmButton: false,
+            timer: 2000
+          })
           localStorage.setItem('access_token', response.data.access_token)
           router.push({ path: '/home' })
+        })
+        .catch(err => {
+          Swal.fire(
+            'Error!',
+            err.response.data.message,
+            'ERROR'
+          )
         })
     },
     fetchProducts (context, payload) {
@@ -62,7 +75,11 @@ export default new Vuex.Store({
           dispatch('fetchProducts')
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire(
+            'Error!',
+            err.response.data.message,
+            'ERROR'
+          )
         })
     },
     editProducts ({ dispatch }, payload) {
@@ -81,10 +98,20 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Your work has been saved',
+            showConfirmButton: false,
+            timer: 1500
+          })
           dispatch('fetchProducts')
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire(
+            'Error!',
+            err.response.data.message,
+            'ERROR'
+          )
         })
     },
     addProducts ({ dispatch }, payload) {
@@ -103,10 +130,20 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Your work has been saved',
+            showConfirmButton: false,
+            timer: 1500
+          })
           dispatch('fetchProducts')
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire(
+            'Error!',
+            err.response.data.message,
+            'ERROR'
+          )
         })
     }
   },

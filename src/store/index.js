@@ -28,12 +28,66 @@ export default new Vuex.Store({
       state.products = products
     },
 
+    SET_BANNERS (state, banners) {
+      state.banners = banners
+    },
+
     SET_FILTERED_PRODUCTS (state, products) {
       state.filteredProducts = products
     }
 
   },
   actions: {
+    fetchProducts ({ commit }) {
+      axios({
+        method: 'GET',
+        url: '/products',
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          console.log(data, '<<<< products')
+          data.forEach(el => {
+            el.price = toCurrencyFormat(el.price)
+          })
+          commit('SET_PRODUCTS', data)
+        })
+        .catch(err => {
+          console.log(err.response.data)
+          Vue.toasted.global.errorMessage(err.response.data.msg)
+        })
+    },
+
+    fetchProductsByCategory ({ commit }, categoryId) {
+      console.log('fetch by cat:', categoryId)
+      axios({
+        method: 'GET',
+        url: '/products?category=' + categoryId,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          console.log(data, '<<<<< filtered')
+          commit('SET_FILTERED_PRODUCTS', data)
+        })
+        .catch(err => {
+          console.log(err.response.data)
+          Vue.toasted.global.errorMessage(err.response.data.msg)
+        })
+    },
+
+    fetchProductDetails (_, id) {
+      return axios({
+        method: 'GET',
+        url: '/products/' + id,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+    },
+
     addProduct ({ dispatch }, payload) {
       return axios({
         method: 'POST',
@@ -53,6 +107,7 @@ export default new Vuex.Store({
           Vue.toasted.global.errorMessage(err.response.data.msg)
         })
     },
+
     deleteProduct ({ dispatch }, id) {
       return axios({
         method: 'DELETE',
@@ -62,6 +117,7 @@ export default new Vuex.Store({
         }
       })
     },
+
     editProduct ({ dispatch }, payload) {
       return axios({
         method: 'PUT',
@@ -82,6 +138,7 @@ export default new Vuex.Store({
           Vue.toasted.global.errorMessage(err.response.data.msg)
         })
     },
+
     submitLoginForm (_, payload) {
       return axios({
         method: 'POST',
@@ -126,27 +183,6 @@ export default new Vuex.Store({
         })
     },
 
-    fetchProducts ({ commit }) {
-      axios({
-        method: 'GET',
-        url: '/products',
-        headers: {
-          access_token: localStorage.getItem('access_token')
-        }
-      })
-        .then(({ data }) => {
-          console.log(data, '<<<< products')
-          data.forEach(el => {
-            el.price = toCurrencyFormat(el.price)
-          })
-          commit('SET_PRODUCTS', data)
-        })
-        .catch(err => {
-          console.log(err.response.data)
-          Vue.toasted.global.errorMessage(err.response.data.msg)
-        })
-    },
-
     fetchCategoryDetails (_, categoryId) {
       console.log('fetch cat details', categoryId)
       return axios({
@@ -158,32 +194,102 @@ export default new Vuex.Store({
       })
     },
 
-    fetchProductsByCategory ({ commit }, categoryId) {
-      console.log('fetch by cat:', categoryId)
+    fetchBanners ({ commit }) {
       axios({
         method: 'GET',
-        url: '/products?category=' + categoryId,
+        url: '/banners',
         headers: {
           access_token: localStorage.getItem('access_token')
         }
       })
         .then(({ data }) => {
-          console.log(data, '<<<<< filtered')
-          commit('SET_FILTERED_PRODUCTS', data)
+          console.log(data, '<<<< banners')
+          commit('SET_BANNERS', data)
         })
         .catch(err => {
           console.log(err.response.data)
           Vue.toasted.global.errorMessage(err.response.data.msg)
         })
     },
-    fetchProductDetails (_, id) {
-      return axios({
+
+    fetchBannersByCategory ({ commit }, categoryId) {
+      console.log('fetch banner by cat:', categoryId)
+      axios({
         method: 'GET',
-        url: '/products/' + id,
+        url: '/banners?category=' + categoryId,
         headers: {
           access_token: localStorage.getItem('access_token')
         }
       })
+        .then(({ data }) => {
+          console.log(data, '<<<<< filtered')
+          commit('SET_FILTERED_BANNERS', data)
+        })
+        .catch(err => {
+          console.log(err.response.data)
+          Vue.toasted.global.errorMessage(err.response.data.msg)
+        })
+    },
+
+    fetchBannerDetails (_, id) {
+      return axios({
+        method: 'GET',
+        url: '/banners/' + id,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+    },
+
+    addBanner ({ dispatch }, payload) {
+      return axios({
+        method: 'POST',
+        url: '/banners/',
+        data: payload,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          console.log(data, '<<< result add banner')
+          dispatch('fetchBanners')
+          router.push('/banners')
+        })
+        .catch(err => {
+          console.log(err.response.data)
+          Vue.toasted.global.errorMessage(err.response.data.msg)
+        })
+    },
+
+    deleteBanner ({ dispatch }, id) {
+      return axios({
+        method: 'DELETE',
+        url: '/banners/' + id,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+    },
+
+    editBanner ({ dispatch }, payload) {
+      return axios({
+        method: 'PUT',
+        url: '/banners/' + payload.id,
+        data: payload,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          console.log(data, '<<< result edit banner')
+          Vue.toasted.global.successMessage(data.msg)
+          dispatch('fetchBanners')
+          router.push('/banners')
+        })
+        .catch(err => {
+          console.log(err.response.data)
+          Vue.toasted.global.errorMessage(err.response.data.msg)
+        })
     }
   },
   modules: {

@@ -2,79 +2,56 @@
   <div class="">
 
   <div class="main-view-header">
-      <h1>Products List</h1>
-      <h3 v-if="products.length > 0">Category: <span>{{products[0].ProductCategory.name}}</span></h3>
+    <vs-button success @click="addBanner" style="float:right">
+      <i class="material-icons">add_circle_outline</i>
+      Add Banner</vs-button>
+      <h1>Banners List</h1>
+      <h3 v-if="$route.query.category">{{route.query.category}}</h3>
   </div>
     <!-- <vs-table
       v-model="selected"
       > -->
-      <vs-table striped>
+      <vs-table v-if="banners" striped>
       <template #thead>
         <vs-tr>
           <vs-th>
             <!-- <vs-checkbox
-              :indeterminate="selected.length == products.length" v-model="allCheck"
-              @change="selected = $vs.checkAll(selected, products)"
+              :indeterminate="selected.length == banners.length" v-model="allCheck"
+              @change="selected = $vs.checkAll(selected, banners)"
             /> -->
             No
           </vs-th>
-          <vs-th>
-            Name
-          </vs-th>
-          <vs-th>
-            Category
-          </vs-th>
-          <vs-th>
-            Price
-          </vs-th>
-          <vs-th>
-            Stock
-          </vs-th>
-          <vs-th>
-            Picture
-          </vs-th>
-          <vs-th>
-            Actions
-          </vs-th>
+          <vs-th>Title</vs-th>
+          <vs-th>Status</vs-th>
+          <vs-th>Picture</vs-th>
+          <vs-th>Actions</vs-th>
         </vs-tr>
       </template>
       <template #tbody>
         <!-- <vs-tr
           :key="i"
-          v-for="(tr, i) in products"
+          v-for="(tr, i) in banners"
           :data="tr"
           :is-selected="!!selected.includes(tr)"
         > -->
         <vs-tr
           :key="i"
-          v-for="(tr, i) in products"
+          v-for="(tr, i) in banners"
           :data="tr"
         >
           <vs-td checkbox>
             <!-- <vs-checkbox :val="tr" v-model="selected" /> -->
             {{i+1}}
           </vs-td>
-          <vs-td>
-            {{ tr.name }}
-          </vs-td>
-          <vs-td v-if="tr.ProductCategory">
-            {{ tr.ProductCategory.name }}
-          </vs-td>
-          <vs-td>
-          {{ tr.price }}
-          </vs-td>
-          <vs-td>
-          {{ tr.stock }}
-          </vs-td>
-          <vs-td>
-          <img :src="tr.imageUrl" class="img-preview-sm" />
-          </vs-td>
+          <vs-td>{{ tr.title }}</vs-td>
+          <vs-td>{{ tr.status }}</vs-td>
+          <vs-td><img :src="tr.imageUrl" class="img-preview-sm" /></vs-td>
           <vs-td>
             <vs-row justify="center">
               <vs-button
                 flat
                 icon
-                @click="editProduct(tr.id)"
+                @click="editBanner(tr.id)"
               >
                 <i class="material-icons">edit</i>
               </vs-button>
@@ -82,7 +59,7 @@
                 icon
                 flat
                 danger
-                @click="showConfirmDelete = true"
+                @click="deleteBanner(tr.id)"
               >
                 <i class="material-icons">delete_outline</i>
               </vs-button>
@@ -96,7 +73,7 @@
             </template>
             <div class="con-content">
               <p>
-                Are you sure you want to delete this product?
+                Are you sure you want to delete this banner?
               </p>
             </div>
 
@@ -105,7 +82,7 @@
                 <vs-button @click="showConfirmDelete=false" dark transparent>
                   Cancel
                 </vs-button>
-                <vs-button @click="deleteProduct(tr.id)" transparent>
+                <vs-button id="deleteBanner" @click="deleteBanner(tr.id)" transparent>
                   Ok
                 </vs-button>
               </div>
@@ -119,40 +96,43 @@
 
 <script>
 export default {
-  name: 'Products',
+  name: 'Banners',
   data: () => ({
-    category: '',
     selected: [],
     allCheck: false,
-    showConfirmDelete: false
+    showConfirmDelete: false,
+    isFetching: false,
+    isDeleting: false
   }),
 
   methods: {
-    deleteProduct (id) {
+    addBanner () {
+      this.$router.push('/banners/add')
+    },
+    deleteBanner (id) {
       this.showConfirmDelete = false
       console.log('delete', id)
-      // this.$store.dispatch('deleteProduct', id)
+      this.$store.dispatch('deleteBanner', id)
+        .then((result) => {
+          console.log(result, '<<< result delete banner')
+          this.$store.dispatch('fetchBanners')
+        })
+        .catch(err => {
+          console.log(err.response, '<<< err delete banner')
+          this.$toasted.global.errorMessage(err.response.data.msg)
+        })
     },
-    editProduct (id) {
+    editBanner (id) {
       console.log('edit', id)
-      this.$router.push('/products/edit//' + id)
+      this.$router.push('/banners/edit/' + id)
     }
   },
   created () {
-    console.log('cat id', this.$route.params.categoryId)
-    this.$store.dispatch('fetchCategoryDetails', this.$route.params.categoryId)
-      .then(({ data }) => {
-        this.category = data
-      })
-      .catch(err => {
-        console.log(err)
-        this.$toasted.global.errorMessage(err.response.data.msg)
-      })
-    this.$store.dispatch('fetchProductsByCategory', this.$route.params.categoryId)
+    this.$store.dispatch('fetchBanners')
   },
   computed: {
-    products () {
-      return this.$store.state.filteredProducts
+    banners () {
+      return this.$store.state.banners
     }
   }
 }
@@ -164,12 +144,10 @@ export default {
       unquote("rgba(var(--vs-"+vsColor+"), "+alpha+")")
   getVar(var)
       unquote("var(--vs-"+var+")")
-  h3 span
-    font-weight 700
-    color #5b3cc4
   .img-preview-sm
     height 50px
     width auto
+
   table
     table-layout auto
     border-collapse collapse

@@ -8,14 +8,12 @@
       textWhite
       >
         <template #logo>
-          <!-- <vs-avatar>
-            <img src="https://lustria.g5plus.net/wp-content/uploads/2018/12/product-07.jpg" />
-          </vs-avatar> -->
-          <vs-button
-            @click="addProduct"
-          >
-            <i class="material-icons">add_circle_outline</i>Add Product
-          </vs-button>
+          <div class="center con-avatars">
+            <vs-avatar circle size="70">
+              <img src="https://images.generated.photos/FBrtfWRfPF9ZIcunzOyvRKDL4wHCFxahh1RcOHMjWtI/rs:fit:512:512/Z3M6Ly9nZW5lcmF0/ZWQtcGhvdG9zL3Ry/YW5zcGFyZW50X3Yy/L3YyXzAzNDY4NDgu/cG5n.png" />
+            </vs-avatar>
+          </div>
+
         </template>
 
           <!-- <vs-sidebar-item id="home">
@@ -29,7 +27,14 @@
             <template #icon>
               <i class="material-icons">view_list</i>
             </template>
-            <span @click="gotoProducts" >All Products</span>
+            <span @click="gotoProducts" >PRODUCTS</span>
+          </vs-sidebar-item>
+
+          <vs-sidebar-item id="banners">
+            <template #icon>
+              <i class="material-icons">view_list</i>
+            </template>
+            <span @click="gotoBanners" >BANNERS</span>
           </vs-sidebar-item>
 
           <!-- <vs-sidebar-group> -->
@@ -60,6 +65,7 @@
           <!-- <vs-row class="center"> -->
              <vs-button
                 transparent
+                danger
                 @click="signOut"
               >
             <i class="material-icons">exit_to_app</i> Sign Out
@@ -80,10 +86,7 @@ export default {
   },
   props: ['user', 'categories'],
   methods: {
-    addProduct () {
-      console.log('goto add product')
-      this.$router.push('/addproduct')
-    },
+
     signOut () {
       console.log('sign out')
       localStorage.removeItem('access_token')
@@ -105,6 +108,10 @@ export default {
         this.$router.push('/products')
       }
     },
+    gotoBanners () {
+      console.log('goto banners')
+      this.$router.push('/banners')
+    },
     gotoCategories () {
       console.log('goto categories')
       if (this.$route.name !== 'Categories') {
@@ -122,6 +129,8 @@ export default {
     unquote("var(--vs-"+var+")")
   #sidebar
     min-height 100vh
-  .not-click
-    cursor default !important
+
+  .vs-sidebar-content .vs-sidebar__logo img
+    max-width 120px !important
+    max-height 120px !important
 </style>

@@ -156,7 +156,7 @@ export default {
     width 100%
     display flex
     flex-direction column
-    justify-content start
+    justify-content flex-start
   .input-group
     margin 1rem 0
   .not-margin

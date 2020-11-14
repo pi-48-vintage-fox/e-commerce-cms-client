@@ -3,7 +3,7 @@
 
     <!-- <form @submit.prevent="addProduct"> -->
     <h1>Add Product</h1>
-  <div class="container-edit-form flex-col">
+  <form class="container-edit-form flex-col">
 
     <!-- <label for="name">Product Name</label> -->
     <vs-input type="text" v-model="name" label="Product Name" name="name"></vs-input>
@@ -15,7 +15,7 @@
     <vs-input type="number" v-model="stock" label="Stock" name="stock"></vs-input>
     <div class="flex-row fullwidth">
       <vs-input type="text" v-model="imageUrl" label="Image URL" name="name"></vs-input>
-      <vs-button class="btn" succes @click="previewUrl = imageUrl">Preview</vs-button>
+      <vs-button class="btn" succes @click.prevent="previewUrl = imageUrl">Preview</vs-button>
     </div>
     <label for="categories">Category</label>
     <img class="image-preview" :src="previewUrl" alt="">
@@ -25,11 +25,12 @@
     </select>
 
     <div class="flex-row center fullwidth">
-      <vs-button flat type="reset">Clear Form</vs-button>
-      <vs-button @click="addProduct">Add</vs-button>
+      <vs-button flat @click.prevent="$router.go(-1)">Cancel</vs-button>
+      <vs-button flat warn type="reset">Clear Form</vs-button>
+      <vs-button block @click.prevent="addProduct">Add</vs-button>
     </div>
     <!-- </form> -->
-  </div>
+  </form>
   </div>
 </template>
 

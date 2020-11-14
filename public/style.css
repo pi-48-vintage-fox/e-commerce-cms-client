@@ -32,3 +32,7 @@ body {
 .fullwidth {
   width: 100%
 }
+
+.vs-button {
+  padding: 0 1rem;
+}

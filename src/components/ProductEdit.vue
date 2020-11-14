@@ -24,7 +24,7 @@
 
     <div class="flex-row center fullwidth" >
       <vs-button flat dark @click.prevent="$router.go(-1)">Cancel</vs-button>
-      <vs-button @click="editProduct">Update</vs-button>
+      <vs-button block @click="editProduct">Update</vs-button>
     </div>
     <!-- </form> -->
   </div>
@@ -108,7 +108,6 @@ export default {
     width:300px;
     height: auto;
     margin-bottom: 1.5rem;
-    border: 2px solid rgb(175, 175, 175)
   }
 
   .btn {

@@ -6,6 +6,9 @@ import Products from '../components/Products.vue'
 import ProductsFiltered from '../components/ProductsFiltered.vue'
 import ProductAdd from '../components/ProductAdd.vue'
 import ProductEdit from '../components/ProductEdit.vue'
+import Banners from '../components/Banners.vue'
+import BannerAdd from '../components/BannerAdd.vue'
+import BannerEdit from '../components/BannerEdit.vue'
 import Categories from '../components/Categories.vue'
 import NotFound from '../views/NotFound.vue'
 
@@ -28,21 +31,38 @@ const routes = [
         component: Products
       },
       {
+        path: 'products/add',
+        name: 'ProductAdd',
+        component: ProductAdd
+      },
+      {
+        path: 'products/edit/:id',
+        name: 'ProductEdit',
+        component: ProductEdit
+      },
+      {
         path: 'products/:categoryId',
         name: 'ProductsByCategory',
         component: ProductsFiltered
       },
       {
-        path: 'addproduct',
-        component: ProductAdd
-      },
-      {
-        path: 'editproduct/:id',
-        component: ProductEdit
-      },
-      {
         path: 'categories',
         component: Categories
+      },
+      {
+        path: 'banners',
+        name: 'Banners',
+        component: Banners
+      },
+      {
+        path: 'banners/add',
+        name: 'BannerAdd',
+        component: BannerAdd
+      },
+      {
+        path: 'banners/edit/:id',
+        name: 'BannerEdit',
+        component: BannerEdit
       }
     ]
   },
@@ -59,9 +79,26 @@ const router = new VueRouter({
   routes
 })
 
+// To silence NavigationDuplicated error
+function patchRouterMethod (router, methodName) {
+  router['old' + methodName] = router[methodName]
+  router[methodName] = async function (location) {
+    return router['old' + methodName](location).catch((error) => {
+      if (error.name === 'NavigationDuplicated') {
+        return this.currentRoute
+      }
+      throw error
+    })
+  }
+}
+
+patchRouterMethod(router, 'push')
+patchRouterMethod(router, 'replace')
+
 router.beforeEach((to, from, next) => {
   if (to.path !== '/login' && !localStorage.access_token) next({ name: 'Login' })
   else if (to.path === '/login' && localStorage.access_token) next({ name: 'Products' })
+  else if (to.path === '/') next({ name: 'Products' })
   else next()
 })
 

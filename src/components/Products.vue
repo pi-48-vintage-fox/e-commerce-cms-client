@@ -2,6 +2,12 @@
   <div class="">
 
   <div class="main-view-header">
+      <vs-button
+        @click="addProduct"
+        style="float:right"
+      >
+        <i class="material-icons">add_circle_outline</i>Add Product
+      </vs-button>
       <h1>Products List</h1>
       <h3 v-if="$route.query.category">{{route.query.category}}</h3>
   </div>
@@ -18,24 +24,12 @@
             /> -->
             No
           </vs-th>
-          <vs-th>
-            Name
-          </vs-th>
-          <vs-th>
-            Category
-          </vs-th>
-          <vs-th>
-            Price
-          </vs-th>
-          <vs-th>
-            Stock
-          </vs-th>
-          <vs-th>
-            Picture
-          </vs-th>
-          <vs-th>
-            Actions
-          </vs-th>
+          <vs-th>Name</vs-th>
+          <vs-th>Category</vs-th>
+          <vs-th>Price</vs-th>
+          <vs-th>Stock</vs-th>
+          <vs-th>Picture</vs-th>
+          <vs-th>Actions</vs-th>
         </vs-tr>
       </template>
       <template #tbody>
@@ -54,21 +48,11 @@
             <!-- <vs-checkbox :val="tr" v-model="selected" /> -->
             {{i+1}}
           </vs-td>
-          <vs-td>
-            {{ tr.name }}
-          </vs-td>
-          <vs-td v-if="tr.ProductCategory">
-            {{ tr.ProductCategory.name }}
-          </vs-td>
-          <vs-td>
-          {{ tr.price }}
-          </vs-td>
-          <vs-td>
-          {{ tr.stock }}
-          </vs-td>
-          <vs-td>
-          <img :src="tr.imageUrl" class="img-product" />
-          </vs-td>
+          <vs-td>{{ tr.name }}</vs-td>
+          <vs-td v-if="tr.ProductCategory">{{ tr.ProductCategory.name }}</vs-td>
+          <vs-td>{{ tr.price }}</vs-td>
+          <vs-td>{{ tr.stock }}</vs-td>
+          <vs-td><img :src="tr.imageUrl" class="img-preview-sm" /></vs-td>
           <vs-td>
             <vs-row justify="center">
               <vs-button
@@ -123,10 +107,16 @@ export default {
   data: () => ({
     selected: [],
     allCheck: false,
-    showConfirmDelete: false
+    showConfirmDelete: false,
+    isFetching: false,
+    isDeleting: false
   }),
 
   methods: {
+    addProduct () {
+      console.log('goto add product')
+      this.$router.push('/products/add')
+    },
     deleteProduct (id) {
       this.showConfirmDelete = false
       console.log('delete', id)
@@ -142,21 +132,15 @@ export default {
     },
     editProduct (id) {
       console.log('edit', id)
-      this.$router.push('/editproduct/' + id)
+      this.$router.push('/products/edit/' + id)
     }
   },
   created () {
-    if (!this.$route.params.categoryId) {
-      console.log('no cat id')
-      this.$store.dispatch('fetchProducts')
-    } else {
-      console.log('cat id', this.$route.params.categoryId)
-      this.$store.dispatch('fetchProductsByCategory', this.$route.params.categoryId)
-    }
+    this.$store.dispatch('fetchProducts')
   },
   computed: {
     products () {
-      return this.$route.params.categoryId ? this.$store.state.filteredProducts : this.$store.state.products
+      return this.$store.state.products
     }
   }
 }
@@ -168,7 +152,7 @@ export default {
       unquote("rgba(var(--vs-"+vsColor+"), "+alpha+")")
   getVar(var)
       unquote("var(--vs-"+var+")")
-  .img-product
+  .img-preview-sm
     height 50px
     width auto
 

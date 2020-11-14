@@ -126,6 +126,7 @@ export default {
           })
           .catch((err) => {
             console.log(err.response)
+            this.$toasted.global.errorMessage(err.response.data.msg)
 
             if (err.response?.status === 401) {
               this.errorBanner = err.response.data.msg

@@ -137,7 +137,7 @@ export default {
         })
         .catch(err => {
           console.log(err.response, '<<< err delete product')
-          this.$toasted.global.errorMessage(err.response.data)
+          this.$toasted.global.errorMessage(err.response.data.msg)
         })
     },
     editProduct (id) {

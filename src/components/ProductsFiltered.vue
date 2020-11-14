@@ -146,6 +146,7 @@ export default {
       })
       .catch(err => {
         console.log(err)
+        this.$toasted.global.errorMessage(err.response.data.msg)
       })
     this.$store.dispatch('fetchProductsByCategory', this.$route.params.categoryId)
   },

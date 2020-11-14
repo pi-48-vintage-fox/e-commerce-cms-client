@@ -4,7 +4,7 @@
       <div id="login-box" class="justify-content-center">
           <div class="container justify-content-center mt-3 col-6">
               <form @submit.prevent="login">
-                  <h3 class="text-dark text-center">E-commerce Login</h3>
+                  <h3 class="text-dark text-center font-weight-bolder">Plantopedia Login</h3><br><br>
                   <div class="form-group">
                       <label for="email_login" class="text-dark">Email</label>
                       <input type="email" class="form-control" id="email_login" aria-describedby="emailHelp" autocomplete="email" v-model="email">
@@ -35,7 +35,7 @@ export default {
     login () {
       this.$store.dispatch('login', { email: this.email, password: this.password })
         .then(() => {
-          this.$router.push('/products') // ke products
+          this.$router.push('/products')
         })
         .catch(err => {
           console.log(err)

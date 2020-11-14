@@ -3,7 +3,7 @@
   <Navbar/>
   <div id="add-form">
     <form class="container justify-content-center col-6" @submit.prevent="addBanner">
-      <h3 class="text-center">Add Banner</h3>
+      <h3 class="text-center mb-5" style="margin-top: 80px">Add Banner</h3>
       <div class="form-group">
           <label for="exampleFormControlInput1">Title</label>
           <input type="text" class="form-control" id="add_name" v-model="title">
@@ -20,6 +20,8 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue'
+import Swal from 'sweetalert2'
+
 export default {
   name: 'AddBanner',
   data () {
@@ -42,7 +44,11 @@ export default {
           this.$router.push('/banners')
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire(
+            'Error!',
+            err.response.data.msg,
+            'ERROR'
+          )
         })
     }
   }

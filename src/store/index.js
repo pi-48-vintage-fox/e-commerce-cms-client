@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from '../../axios/axiosInstance'
+import Swal from 'sweetalert2'
 
 Vue.use(Vuex)
 
@@ -8,7 +9,8 @@ export default new Vuex.Store({
   state: {
     products: [],
     banners: [],
-    product: {}
+    product: {},
+    banner: {}
   },
   mutations: {
     SET_PRODUCTS (state, dataProducts) {
@@ -19,6 +21,9 @@ export default new Vuex.Store({
     },
     SET_BANNERS (state, dataBanners) {
       state.banners = dataBanners
+    },
+    SET_BANNER_BY_ID (state, dataBanner) {
+      state.banner = dataBanner
     }
   },
   actions: {
@@ -33,9 +38,14 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           localStorage.setItem('access_token', data.access_token)
+          Swal.fire('Signed in successfully')
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire(
+            'Error!',
+            err.response.data.msg,
+            'ERROR'
+          )
         })
     },
     fetchProducts (context, payload) {
@@ -51,7 +61,11 @@ export default new Vuex.Store({
           context.commit('SET_PRODUCTS', data)
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire(
+            'Error!',
+            err.response.data.msg,
+            'ERROR'
+          )
         })
     },
     deleteProduct (context, payload) {
@@ -65,9 +79,14 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           context.dispatch('fetchProducts')
+          Swal.fire('Sucessfully Delete Product')
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire(
+            'Error!',
+            err.response.data.msg,
+            'ERROR'
+          )
         })
     },
     addProduct (context, payload) {
@@ -87,9 +106,14 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           context.dispatch('fetchProducts')
+          Swal.fire('Sucessfully Add Product')
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire(
+            'Error!',
+            err.response.data.msg,
+            'ERROR'
+          )
         })
     },
     editProduct (context, payload) {
@@ -109,9 +133,14 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           context.dispatch('fetchProducts')
+          Swal.fire('Sucessfully Edit Product')
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire(
+            'Error!',
+            err.response.data.msg,
+            'ERROR'
+          )
         })
     },
     fetchBanners (context, payload) {
@@ -127,7 +156,11 @@ export default new Vuex.Store({
           context.commit('SET_BANNERS', data)
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire(
+            'Error!',
+            err.response.data.msg,
+            'ERROR'
+          )
         })
     },
     addBanner (context, payload) {
@@ -145,9 +178,14 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           context.dispatch('fetchBanners')
+          Swal.fire('Sucessfully Add Banner')
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire(
+            'Error!',
+            err.response.data.msg,
+            'ERROR'
+          )
         })
     },
     changeStatus (context, payload) {
@@ -161,9 +199,14 @@ export default new Vuex.Store({
       })
         .then(() => {
           context.dispatch('fetchBanners')
+          Swal.fire('Sucessfully Change Banner Status')
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire(
+            'Error!',
+            err.response.data.msg,
+            'ERROR'
+          )
         })
     },
     deleteBanner (context, payload) {
@@ -177,9 +220,39 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           context.dispatch('fetchBanners')
+          Swal.fire('Sucessfully Delete Banner')
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire(
+            'Error!',
+            err.response.data.msg,
+            'ERROR'
+          )
+        })
+    },
+    editBanner (context, payload) {
+      const accessToken = localStorage.getItem('access_token')
+      return axios({
+        method: 'PUT',
+        url: `/banners/${payload.id}`,
+        headers: {
+          access_token: accessToken
+        },
+        data: {
+          title: payload.title,
+          image_url: payload.image_url
+        }
+      })
+        .then(({ data }) => {
+          context.dispatch('fetchBanners')
+          Swal.fire('Sucessfully Edit Banner')
+        })
+        .catch(err => {
+          Swal.fire(
+            'Error!',
+            err.response.data.msg,
+            'ERROR'
+          )
         })
     }
   },

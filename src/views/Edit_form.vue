@@ -3,7 +3,7 @@
   <Navbar/>
   <div id="edit-form">
     <form class="container justify-content-center col-6" @submit.prevent="editProduct">
-      <h3 class="text-center">Edit Product</h3>
+      <h3 class="text-center mb-5 mt-5">Edit Product</h3>
       <div class="form-group">
           <label for="exampleFormControlInput1">Name</label>
           <input type="text" class="form-control" id="edit_name" :placeholder="productToEdit.name" v-model="productToEdit.name">
@@ -28,6 +28,7 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue'
+import Swal from 'sweetalert2'
 export default {
   name: 'EditProduct',
   components: {
@@ -41,7 +42,11 @@ export default {
           this.$router.push('/products')
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire(
+            'Error!',
+            err.response.data.msg,
+            'ERROR'
+          )
         })
     }
   },

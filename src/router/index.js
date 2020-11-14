@@ -39,6 +39,11 @@ const routes = [
     path: '/addBanner',
     name: 'AddBanner',
     component: () => import('../views/Add_banner.vue')
+  },
+  {
+    path: '/edit_banner',
+    name: 'Edit Banner',
+    component: () => import('../views/Edit_banner.vue')
   }
 ]
 

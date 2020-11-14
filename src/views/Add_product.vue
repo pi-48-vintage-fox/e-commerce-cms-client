@@ -3,7 +3,7 @@
   <Navbar/>
   <div id="add-form">
     <form class="container justify-content-center col-6" @submit.prevent="addProduct">
-      <h3 class="text-center">Add Product</h3>
+      <h3 class="text-center mb-5 mt-5">Add Product</h3>
       <div class="form-group">
           <label for="exampleFormControlInput1">Name</label>
           <input type="text" class="form-control" id="add_name" v-model="name">
@@ -28,6 +28,8 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue'
+import Swal from 'sweetalert2'
+
 export default {
   name: 'AddProduct',
   data () {
@@ -54,7 +56,11 @@ export default {
           this.$router.push('/products')
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire(
+            'Error!',
+            err.response.data.msg,
+            'ERROR'
+          )
         })
     }
   }

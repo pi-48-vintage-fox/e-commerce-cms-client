@@ -9,12 +9,14 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 export default {
   name: 'Navbar',
   methods: {
     logout () {
       localStorage.clear()
       this.$router.push('/Login')
+      Swal.fire('Log out successful')
     }
   }
 }

@@ -9,16 +9,17 @@
           </h4>
         </template>
         <template #img>
-          <img src="https://images.unsplash.com/photo-1533038590840-1cde6e668a91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" alt="">
+          <!-- <img src="https://images.unsplash.com/photo-1533038590840-1cde6e668a91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" alt=""> -->
+          <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" alt="">
         </template>
         <template #text>
             <form class="con-form" @submit.prevent="submitLoginForm">
-              <vs-input v-model="email" placeholder="admin@mail.com">
+              <vs-input v-model="email" border label="Email" placeholder="admin@mail.com">
                 <template #icon>
                   @
                 </template>
               </vs-input>
-              <vs-input type="password" v-model="password" placeholder="1234">
+              <vs-input type="password" v-model="password" border label="Password" placeholder="1234">
                 <template #icon>
                   <!-- <i class='bx bxs-lock'></i> -->
                   <i class='material-icons md-16 bx bxs-lock'>lock</i>
@@ -92,6 +93,7 @@ export default {
             this.email = ''
             this.password = ''
             console.log(err.response)
+            this.$toasted.global.errrorMessage(err.response.data)
           })
       }
     },
@@ -186,4 +188,6 @@ export default {
           text-decoration underline
     .vs-button
       margin 0px
+    .vs-input-parent
+      margin-bottom 1rem
   </style>

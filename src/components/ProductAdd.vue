@@ -1,25 +1,30 @@
 <template>
-  <div>
-    <form @submit.prevent="addProduct">
+  <div class="container-edit-main flex-col center">
+
+    <!-- <form @submit.prevent="addProduct"> -->
     <h1>Add Product</h1>
-    <label for="name">Product Name</label>
-    <input type="text" v-model="name" name="name">
+  <div class="container-edit-form flex-col">
+
+    <!-- <label for="name">Product Name</label> -->
+    <vs-input type="text" v-model="name" label="Product Name" name="name"></vs-input>
     <label for="description">Description</label>
     <textarea v-model="description" name="description" cols="15" rows="5"></textarea>
-    <label for="price">Price</label>
-    <input type="number" v-model="price" name="price">
-    <label for="stock">Stock</label>
-    <input type="text" v-model="stock" name="stock">
-    <label for="categories"></label>
+    <!-- <label for="price">Price</label> -->
+    <vs-input type="number" v-model="price" label="Price" name="price"></vs-input>
+    <!-- <label for="stock">Stock</label> -->
+    <vs-input type="number" v-model="stock" label="Stock" name="stock"></vs-input>
+    <vs-input type="text" v-model="imageUrl" label="Image URL" name="name"></vs-input>
+    <label for="categories">Category</label>
     <select v-model="selectedCat">
       <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{cat.name}}</option>
     </select>
 
-    <div class="center">
+    <div class="flex-row center">
       <button type="reset">Clear Form</button>
-      <button type="submit">Add</button>
+      <button @click="addProduct">Add</button>
     </div>
-    </form>
+    <!-- </form> -->
+  </div>
   </div>
 </template>
 
@@ -37,7 +42,8 @@ export default {
       description: '',
       price: 0,
       stock: 0,
-      selectedCat: 1
+      imageUrl: '',
+      selectedCat: ''
     }
   },
 
@@ -49,6 +55,7 @@ export default {
         description: this.description,
         price: this.price,
         stock: this.stock,
+        imageUrl: this.imageUrl,
         ProductCategoryId: this.selectedCat
       })
     }

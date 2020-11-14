@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
 import Login from '../views/Login.vue'
 import Products from '../components/Products.vue'
+import ProductsFiltered from '../components/ProductsFiltered.vue'
 import ProductAdd from '../components/ProductAdd.vue'
 import ProductEdit from '../components/ProductEdit.vue'
 import Categories from '../components/Categories.vue'
@@ -29,7 +30,7 @@ const routes = [
       {
         path: 'products/:categoryId',
         name: 'ProductsByCategory',
-        component: Products
+        component: ProductsFiltered
       },
       {
         path: 'addproduct',

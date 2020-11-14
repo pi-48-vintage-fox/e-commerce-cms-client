@@ -12,10 +12,10 @@
             <img src="https://lustria.g5plus.net/wp-content/uploads/2018/12/product-07.jpg" />
           </vs-avatar> -->
           <vs-button
-            large
-            block
             @click="addProduct"
-            >Add Product</vs-button>
+          >
+            <i class="material-icons">add_circle_outline</i>Add Product
+          </vs-button>
         </template>
 
           <!-- <vs-sidebar-item id="home">
@@ -27,16 +27,16 @@
 
           <vs-sidebar-item id="products">
             <template #icon>
-              <i class="material-icons">shopping_basket</i>
+              <i class="material-icons">view_list</i>
             </template>
-            <span @click="gotoProducts" >Products</span>
+            <span @click="gotoProducts" >All Products</span>
           </vs-sidebar-item>
 
           <!-- <vs-sidebar-group> -->
             <!-- <template #header> -->
               <vs-sidebar-item >
                 <template #icon>
-                  <i class='material-icons bx bx-group'>category</i>
+                  <i class='material-icons not-click'>category</i>
                 </template>
                 CATEGORIES
               </vs-sidebar-item>
@@ -59,10 +59,10 @@
         <template #footer>
           <!-- <vs-row class="center"> -->
              <vs-button
-                border
+                transparent
                 @click="signOut"
               >
-            <i class="material-icons">exit_to_app</i> Sign out
+            <i class="material-icons">exit_to_app</i> Sign Out
           </vs-button>
           <!-- </vs-row> -->
         </template>
@@ -122,4 +122,6 @@ export default {
     unquote("var(--vs-"+var+")")
   #sidebar
     min-height 100vh
+  .not-click
+    cursor default !important
 </style>

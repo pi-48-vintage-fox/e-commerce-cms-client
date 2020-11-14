@@ -7,10 +7,13 @@ import store from './store'
 
 import 'vuesax/dist/vuesax.css'
 import 'material-icons/iconfont/material-icons.css'
+import '../public/mdi.css'
+import '../public/style.css'
 
 Vue.use(Toasted, {
   router,
-  duration: 8000,
+  duration: 5000,
+  keepOnHover: true,
   theme: 'bubble'
 })
 
@@ -32,19 +35,19 @@ new Vue({
 }).$mount('#app')
 
 Vue.toasted.register('errorMessage', payload => {
-  return payload.message
+  return payload
 }, {
   type: 'error',
   icon: 'error_outline'
 })
 Vue.toasted.register('successMessage', payload => {
-  return payload.message
+  return payload
 }, {
   type: 'success',
   icon: 'check_circle_outline'
 })
 Vue.toasted.register('infoMessage', payload => {
-  return payload.message
+  return payload
 }, {
   type: 'info',
   icon: 'info'

@@ -1,25 +1,28 @@
 <template>
-  <div>
-    <form @submit.prevent="editProduct">
+<div class="container-edit-main flex-col center">
+    <!-- <form @submit.prevent="editProduct"> -->
     <h1>Edit Product</h1>
-    <label for="name">Product Name</label>
-    <input type="text" v-model="name" name="name">
+
+  <div class="container-edit-form flex-col">
+    <!-- <label for="name">Product Name</label> -->
+    <vs-input label="Product Name" type="text" v-model="name" name="name" />
     <label for="description">Description</label>
-    <textarea v-model="description" name="description" cols="15" rows="5"></textarea>
-    <label for="price">Price</label>
-    <input type="number" v-model="price" name="price">
-    <label for="stock">Stock</label>
-    <input type="text" v-model="stock" name="stock">
-    <label for="categories"></label>
-    <select v-model="ProductCategoryId">
+    <textarea type="text" v-model="description" label="Description" name="description" cols="15" rows="5"></textarea>
+    <!-- <label for="price">Price</label> -->
+    <vs-input label="Price" type="number" v-model="price" name="price"/>
+    <!-- <label for="stock">Stock</label> -->
+    <vs-input label="Stock" type="number" v-model="stock" name="stock"/>
+    <label for="categories">Category</label>
+    <select filter name="categories" label="Category" v-model="ProductCategoryId">
       <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{cat.name}}</option>
     </select>
 
-    <div class="center">
-      <button type="reset">Clear Form</button>
-      <button type="submit">Update</button>
+    <div class="flex-row center" >
+      <vs-button flat dark @click.prevent="$router.go(-1)">Cancel</vs-button>
+      <vs-button @click="editProduct">Update</vs-button>
     </div>
-    </form>
+    <!-- </form> -->
+  </div>
   </div>
 </template>
 
@@ -37,7 +40,8 @@ export default {
       description: '',
       price: 0,
       stock: 0,
-      ProductCategoryId: 1
+      imageUrl: '',
+      ProductCategoryId: ''
     }
   },
   created () {
@@ -48,10 +52,12 @@ export default {
         this.description = data.description
         this.price = data.price
         this.stock = data.stock
+        this.imageUrl = data.imageUrl
         this.ProductCategoryId = data.ProductCategoryId
       })
       .catch(err => {
-        console.log(err)
+        console.log(err.response)
+        this.$toasted.global.errorMessage(err.response.data)
       })
   },
 
@@ -73,9 +79,41 @@ export default {
 </script>
 
 <style>
-form {
+
+  .container-edit-form {
+    width: 60%;
+    min-width: 400px
+  }
+/* form {
   display: flex;
   flex-direction: column
-}
+} */
+  .vs-input-parent {
+    /* min-width: 300px */
+    margin-bottom: 2rem;
+    width: 100%;
+  }
+
+  /* .vs-input-parent + .vs-input-parent {
+    margin-bottom: 2rem;
+
+    } */
+
+  .vs-input, textarea {
+    width: 100% !important
+  }
+
+  label, vs-input__label {
+    text-align: left;
+    font-size: 0.75rem
+  }
+  textarea, select {
+    border-radius: 12px;
+    background-color: rgb(244, 247, 248);
+    border: 0 ;
+    padding: 7px 13px 7px 10px;
+    outline: none;
+    margin-bottom: 2rem;
+  }
 
 </style>

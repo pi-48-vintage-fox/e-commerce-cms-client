@@ -4,6 +4,9 @@ import axios from '../../config/axios'
 import router from '../router'
 import { toCurrencyFormat } from '../../helpers'
 
+import toasted from '../main'
+
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -49,7 +52,8 @@ export default new Vuex.Store({
           router.push('/products')
         })
         .catch(err => {
-          console.log(err)
+          console.log(err.response.data)
+          Vue.toasted.global.errorMessage(err.response.data.msg)
         })
     },
     deleteProduct ({ dispatch }, id) {
@@ -60,13 +64,6 @@ export default new Vuex.Store({
           access_token: localStorage.getItem('access_token')
         }
       })
-        .then((result) => {
-          console.log(result, '<<< result delete product')
-          dispatch('fetchProducts')
-        })
-        .catch(err => {
-          console.log(err, '<<< err delete product')
-        })
     },
     editProduct ({ dispatch }, payload) {
       return axios({
@@ -79,11 +76,13 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           console.log(data, '<<< result edit product')
+          Vue.toasted.global.successMessage(data.msg)
           dispatch('fetchProducts')
           router.push('/products')
         })
         .catch(err => {
-          console.log(err)
+          console.log(err.response.data)
+          Vue.toasted.global.errorMessage(err.response.data.msg)
         })
     },
     submitLoginForm ({ commit }, payload) {
@@ -125,7 +124,8 @@ export default new Vuex.Store({
           commit('SET_CATEGORIES', data)
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err.response.data)
+          Vue.toasted.global.errorMessage(err.response.data.msg)
         })
     },
 
@@ -145,14 +145,24 @@ export default new Vuex.Store({
           commit('SET_PRODUCTS', data)
         })
         .catch(err => {
-          console.log(err)
-          this.$emit('showMessage', {
-            msg: err,
-            type: 'error'
-          })
+          console.log(err.response.data)
+          Vue.toasted.global.errorMessage(err.response.data.msg)
         })
     },
+
+    fetchCategoryDetails (_, categoryId) {
+      console.log('fetch cat details', categoryId)
+      return axios({
+        method: 'GET',
+        url: '/categories/' + categoryId,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+    },
+
     fetchProductsByCategory ({ commit }, categoryId) {
+      console.log('fetch by cat:', categoryId)
       axios({
         method: 'GET',
         url: '/products?category=' + categoryId,
@@ -161,10 +171,12 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          console.log(data, '<<<<< filtered')
           commit('SET_FILTERED_PRODUCTS', data)
         })
         .catch(err => {
-          console.log(err)
+          console.log(err.response.data)
+          Vue.toasted.global.errorMessage(err.response.data.msg)
         })
     },
     fetchProductDetails (_, id) {

@@ -8,7 +8,7 @@
     <!-- <vs-table
       v-model="selected"
       > -->
-      <vs-table striped>
+      <vs-table v-if="products" striped>
       <template #thead>
         <vs-tr>
           <vs-th>
@@ -82,7 +82,7 @@
                 icon
                 flat
                 danger
-                @click="showConfirmDelete = true"
+                @click="deleteProduct(tr.id)"
               >
                 <i class="material-icons">delete_outline</i>
               </vs-button>
@@ -105,7 +105,7 @@
                 <vs-button @click="showConfirmDelete=false" dark transparent>
                   Cancel
                 </vs-button>
-                <vs-button @click="deleteProduct(tr.id)" transparent>
+                <vs-button id="deleteProduct" @click="deleteProduct(tr.id)" transparent>
                   Ok
                 </vs-button>
               </div>
@@ -123,14 +123,22 @@ export default {
   data: () => ({
     selected: [],
     allCheck: false,
-    showConfirmDelete: false,
+    showConfirmDelete: false
   }),
 
   methods: {
     deleteProduct (id) {
       this.showConfirmDelete = false
       console.log('delete', id)
-      // this.$store.dispatch('deleteProduct', id)
+      this.$store.dispatch('deleteProduct', id)
+        .then((result) => {
+          console.log(result, '<<< result delete product')
+          this.$store.dispatch('fetchProducts')
+        })
+        .catch(err => {
+          console.log(err.response, '<<< err delete product')
+          this.$toasted.global.errorMessage(err.response.data)
+        })
     },
     editProduct (id) {
       console.log('edit', id)

@@ -5,7 +5,7 @@
         <TheSidebar :user="user" :categories="categories" />
       </vs-col>
       <vs-col id="main-view" vs-type="flex" vs-justify="center" vs-align="center" w="9">
-        <router-view></router-view>
+        <router-view :key="$route.path"></router-view>
       </vs-col>
     </vs-row>
   </div>

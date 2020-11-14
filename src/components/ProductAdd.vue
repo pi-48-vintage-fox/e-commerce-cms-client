@@ -13,15 +13,20 @@
     <vs-input type="number" v-model="price" label="Price" name="price"></vs-input>
     <!-- <label for="stock">Stock</label> -->
     <vs-input type="number" v-model="stock" label="Stock" name="stock"></vs-input>
-    <vs-input type="text" v-model="imageUrl" label="Image URL" name="name"></vs-input>
+    <div class="flex-row fullwidth">
+      <vs-input type="text" v-model="imageUrl" label="Image URL" name="name"></vs-input>
+      <vs-button class="btn" succes @click="previewUrl = imageUrl">Preview</vs-button>
+    </div>
     <label for="categories">Category</label>
-    <select v-model="selectedCat">
+    <img class="image-preview" :src="previewUrl" alt="">
+
+    <select v-model="ProductCategoryId">
       <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{cat.name}}</option>
     </select>
 
-    <div class="flex-row center">
-      <button type="reset">Clear Form</button>
-      <button @click="addProduct">Add</button>
+    <div class="flex-row center fullwidth">
+      <vs-button flat type="reset">Clear Form</vs-button>
+      <vs-button @click="addProduct">Add</vs-button>
     </div>
     <!-- </form> -->
   </div>
@@ -43,7 +48,8 @@ export default {
       price: 0,
       stock: 0,
       imageUrl: '',
-      selectedCat: ''
+      ProductCategoryId: '',
+      previewUrl: ''
     }
   },
 
@@ -56,7 +62,7 @@ export default {
         price: this.price,
         stock: this.stock,
         imageUrl: this.imageUrl,
-        ProductCategoryId: this.selectedCat
+        ProductCategoryId: this.ProductCategoryId
       })
     }
   }

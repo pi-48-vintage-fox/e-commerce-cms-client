@@ -28,3 +28,7 @@ body {
 .justify-center {
   justify-content: center;
 }
+
+.fullwidth {
+  width: 100%
+}

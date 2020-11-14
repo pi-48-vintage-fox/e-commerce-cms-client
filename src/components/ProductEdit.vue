@@ -12,13 +12,17 @@
     <vs-input label="Price" type="number" v-model="price" name="price"/>
     <!-- <label for="stock">Stock</label> -->
     <vs-input label="Stock" type="number" v-model="stock" name="stock"/>
-    <vs-input label="Image URL" type="text" v-model="imageUrl" name="imageUrl"/>
+    <div class="flex-row fullwidth">
+      <vs-input label="Image URL" type="text" v-model="imageUrl" name="imageUrl"/>
+      <vs-button class="btn" succes @click="previewUrl = imageUrl">Preview</vs-button>
+    </div>
+      <img class="image-preview" :src="previewUrl" alt="">
     <label for="categories">Category</label>
     <select filter name="categories" label="Category" v-model="ProductCategoryId">
       <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{cat.name}}</option>
     </select>
 
-    <div class="flex-row center" >
+    <div class="flex-row center fullwidth" >
       <vs-button flat dark @click.prevent="$router.go(-1)">Cancel</vs-button>
       <vs-button @click="editProduct">Update</vs-button>
     </div>
@@ -42,7 +46,8 @@ export default {
       price: 0,
       stock: 0,
       imageUrl: '',
-      ProductCategoryId: ''
+      ProductCategoryId: '',
+      previewUrl: ''
     }
   },
   created () {
@@ -54,6 +59,7 @@ export default {
         this.price = data.price
         this.stock = data.stock
         this.imageUrl = data.imageUrl
+        this.previewUrl = data.imageUrl
         this.ProductCategoryId = data.ProductCategoryId
       })
       .catch(err => {
@@ -84,7 +90,9 @@ export default {
 
   .container-edit-form {
     width: 60%;
-    min-width: 400px
+    min-width: 400px;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 /* form {
   display: flex;
@@ -96,10 +104,24 @@ export default {
     width: 100%;
   }
 
-  /* .vs-input-parent + .vs-input-parent {
-    margin-bottom: 2rem;
+  .image-preview {
+    width:300px;
+    height: auto;
+    margin-bottom: 1.5rem;
+    border: 2px solid rgb(175, 175, 175)
+  }
 
-    } */
+  .btn {
+    height: 32px;
+  }
+
+  .vs-input-parent {
+    align-self: flex-start !important
+  }
+
+  .vs-input-parent[name=price], .vs-input-parent[name=stock] {
+    width: 150px !important
+  }
 
   .vs-input, textarea {
     width: 100% !important

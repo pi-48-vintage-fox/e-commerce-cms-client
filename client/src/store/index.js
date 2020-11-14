@@ -7,14 +7,22 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     product: [],
-    category: []
+    category: [],
+    productById: [],
+    productCategory: []
   },
   mutations: {
     setProduct (state, payload) {
       state.product = payload
     },
+    setProductById (state, payload) {
+      state.productById = payload
+    },
     setCategory (state, payload) {
       state.category = payload
+    },
+    setProductCategory (state, payload) {
+      state.productCategory = payload
     }
   },
   actions: {
@@ -27,7 +35,20 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           context.commit('setProduct', data)
-          console.log(data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    fetchProductById (context, id) {
+      const accessToken = localStorage.getItem('access_token')
+      axios({
+        url: `/product/${id}`,
+        method: 'GET',
+        headers: { access_token: accessToken }
+      })
+        .then(({ data }) => {
+          context.commit('setProductById', data)
         })
         .catch(err => {
           console.log(err)
@@ -81,6 +102,42 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err)
+        })
+    },
+    viewProductById (context, id) {
+      const accessToken = localStorage.getItem('access_token')
+      axios({
+        url: `/category/${id}`,
+        method: 'GET',
+        headers: { access_token: accessToken }
+      })
+        .then(({ data }) => {
+          context.commit('setProductCategory', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    updateProduct (context, data) {
+      console.log(+data.dataBarang.price, 'dari store')
+      const accessToken = localStorage.getItem('access_token')
+      return axios({
+        url: `/product/${data.id}`,
+        method: 'PUT',
+        headers: { access_token: accessToken },
+        body: {
+          name: data.dataBarang.name,
+          image_url: data.dataBarang.image_url,
+          price: data.dataBarang.price,
+          stock: data.dataBarang.stock,
+          CategoryId: data.dataBarang.CategoryId
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+        })
+        .catch(err => {
+          console.log(err.response)
         })
     }
   },

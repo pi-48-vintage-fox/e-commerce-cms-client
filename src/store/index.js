@@ -9,7 +9,8 @@ export default new Vuex.Store({
     title: 'E-Commerce CMS',
     products: [],
     product: {},
-    categories: []
+    categories: [],
+    banners: []
   },
   mutations: {
     getProducts (state, payload) {
@@ -23,6 +24,9 @@ export default new Vuex.Store({
     },
     getCategories (state, payload) {
       state.categories = payload
+    },
+    getBanners (state, payload) {
+      state.banners = payload
     }
   },
   actions: {
@@ -110,6 +114,15 @@ export default new Vuex.Store({
         }
       })
     },
+    deleteProduct (context, id) {
+      return axios({
+        url: `/products/${id}`,
+        method: 'DELETE',
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+    },
     buy (context, payload) {
       return axios({
         url: `/products/${+payload.id}`,
@@ -120,6 +133,27 @@ export default new Vuex.Store({
         headers: {
           access_token: localStorage.getItem('access_token')
         }
+      })
+    },
+    fetchBanner (context) {
+      axios
+        .get('/banner')
+        .then(({ data }) => {
+          context.commit('getBanners', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    addBanner (context, payload) {
+      const accessToken = localStorage.getItem('access_token')
+      return axios({
+        url: '/banner',
+        method: 'POST',
+        headers: {
+          access_token: accessToken
+        },
+        data: payload
       })
     }
   },

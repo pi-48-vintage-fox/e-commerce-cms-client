@@ -12,14 +12,14 @@
           <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img class="d-block w-100" src="https://ecs7.tokopedia.net/img/blog/seller/2018/03/personalisasi-tampilan-toko-anda-agar-unik-dan-menarik.jpg" alt="First slide">
+                <img class="d-block w-100" src="../assets/banner.jpg" alt="Second slide">
               </div>
-              <div class="carousel-item">
-                <img class="d-block w-100" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTGK0CbfYTcBd8xwnXxyDHrJss3pG5AflS-2A&usqp=CAU" alt="Second slide">
+              <div v-for="banner in banners" :key="banner.id" class="carousel-item">
+                <img class="d-block w-100" :src="banner.image_url" alt="First slide">
               </div>
-              <div class="carousel-item">
+              <!-- <div class="carousel-item">
                 <img class="d-block w-100" src="https://ecs7.tokopedia.net/blog-tokopedia-com/uploads/2017/09/Blog-Banner-900x344.jpg" alt="Third slide">
-              </div>
+              </div> -->
             </div>
             <div class="container">
               <div class="row mx-auto">
@@ -49,10 +49,21 @@
 <script>
 export default {
   name: 'Carousel',
+  methods: {
+    fetchBanner () {
+      this.$store.dispatch('fetchBanner')
+    }
+  },
   computed: {
     title () {
       return this.$store.state.title
+    },
+    banners () {
+      return this.$store.state.banners
     }
+  },
+  created () {
+    return this.fetchBanner()
   }
 }
 </script>

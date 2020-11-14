@@ -11,6 +11,7 @@ import NotFound from '../views/NotFoundPage.vue'
 import ProductDashboard from '../views/ProductDashboard.vue'
 import CategoryDashboard from '../views/CategoryDashboard'
 import EditProduct from '../components/EditProduct.vue'
+import BannerDashboard from '../views/BannerDashboard.vue'
 
 Vue.use(VueRouter)
 
@@ -54,6 +55,11 @@ const routes = [
         name: 'CategoryDashboard',
         path: 'category-list',
         component: CategoryDashboard
+      },
+      {
+        path: 'banner-list',
+        name: 'BannerDashboard',
+        component: BannerDashboard
       }
     ]
   },

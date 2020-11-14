@@ -7,8 +7,7 @@
       <div class="list-group list-group-flush">
         <router-link to="/dashboard/product-list" class="list-group-item list-group-item-action bg-light">Product</router-link>
         <router-link to="/dashboard/category-list" class="list-group-item list-group-item-action bg-light">Category</router-link>
-        <a href="#" class="list-group-item list-group-item-action bg-light">User</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Banner</a>
+        <router-link to="/dashboard/banner-list" class="list-group-item list-group-item-action bg-light">Banner</router-link>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->

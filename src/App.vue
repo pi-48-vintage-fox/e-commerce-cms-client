@@ -70,14 +70,19 @@ export default {
   padding: 0;
 }
 
+body {
+  background-image: url("https://cdn.shopify.com/s/files/1/1057/4058/products/illustration-old-bone-white_600x.jpg?v=1575828861");
+  background-repeat: repeat-y;
+  background-size: cover;
+  background-position-x: center;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   font-size: 1.5em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background-color: #34495E;
-  background-repeat: repeat-y;
   color: #2c3e50;
 }
 

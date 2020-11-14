@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Main from '../views/Main.vue'
+import EditProductForm from '../components/EditProductForm.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ const routes = [
     path: '/',
     name: 'Main',
     component: Main
+  },
+  {
+    path: '/:id',
+    name: 'EditProductForm',
+    component: EditProductForm
   }
 ]
 

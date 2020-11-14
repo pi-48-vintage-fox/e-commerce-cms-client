@@ -5,7 +5,7 @@
         <h3><a href="#" @click.prevent="resetCategory">Home</a></h3>
         <div class="space categories-space">
           <h3><b>Categories</b></h3>
-          <ul>
+          <ul class="overflow-auto">
             <Category
               v-for="category in categories"
               :key="category.id"
@@ -15,7 +15,25 @@
             />
           </ul>
         </div>
-        <div class="action-category">
+        <div class="action-product">
+          <div class="add-product">
+            <button class="btn btn-action" @click="addProduct">
+              <svg
+                width="1.5em"
+                height="1.5em"
+                viewBox="0 0 16 16"
+                class="bi bi-file-earmark-plus-fill"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M2 2a2 2 0 0 1 2-2h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm7.5 1.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V11a.5.5 0 0 0 1 0V9.5H10a.5.5 0 0 0 0-1H8.5V7z"
+                />
+              </svg>
+              <small> Add Product</small>
+            </button>
+          </div>
           <div class="add-category">
             <button class="btn btn-action" @click="addCategory">
               <svg
@@ -76,24 +94,6 @@
                 <small> Add Banner</small>
               </button>
             </div>
-            <div class="delete-banner">
-              <button class="btn btn-action" @click="deleteBanner">
-                <svg
-                  width="1.5em"
-                  height="1.5em"
-                  viewBox="0 0 16 16"
-                  class="bi bi-file-earmark-x-fill"
-                  fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M2 2a2 2 0 0 1 2-2h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm7.5 1.5v-2l3 3h-2a1 1 0 0 1-1-1zM6.854 7.146a.5.5 0 1 0-.708.708L7.293 9l-1.147 1.146a.5.5 0 0 0 .708.708L8 9.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 9l1.147-1.146a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146z"
-                  />
-                </svg>
-                <small> Delete Banner</small>
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -134,12 +134,13 @@
               :key="i"
               :product="product"
               :counter="i"
+              :categories="categories"
           />
           <div class="content-header" v-show="show==='banners'" v-if="banners">
             <div class="content-header-text col-1">No.</div>
-            <div class="content-header-text col-4">Image</div>
+            <div class="content-header-text col-5">Image</div>
             <div class="content-header-text col-3">Title</div>
-            <div class="content-header-text col-2">Status</div>
+            <div class="content-header-text col-1">Status</div>
           </div>
           <Banner
               v-show="show==='banners'"
@@ -165,6 +166,12 @@ export default {
     return {
       navOpen: false,
       chosenCategory: '',
+      addProductPayload: {
+        name: '',
+        image_url: '',
+        price: '',
+        stock: ''
+      },
       addCategoryPayload: {
         name: ''
       },
@@ -173,7 +180,8 @@ export default {
         image_url: ''
       },
       categoriesList: '',
-      show: 'products'
+      show: 'products',
+      showEditProduct: false
     }
   },
   methods: {
@@ -194,6 +202,75 @@ export default {
     showBanners () {
       this.show = 'banners'
     },
+    addProduct () {
+      if (this.$store.state.loggedIn) {
+        const objCategories = {}
+        this.categories.forEach((element) => {
+          objCategories[element.id] = element.name
+        })
+        Swal.fire({
+          title: 'Product Identity',
+          html:
+          '<input id="swal-input1" class="swal2-input" placeholder="Image URL">' +
+          '<input id="swal-input2" class="swal2-input" placeholder="Product Name">' +
+          '<input id="swal-input3" class="swal2-input" placeholder="Product Price">' +
+          '<input id="swal-input4" class="swal2-input" type="number" min="0" placeholder="Product Stock">',
+          focusConfirm: false,
+          preConfirm: () => {
+            return [
+              document.getElementById('swal-input1').value,
+              document.getElementById('swal-input2').value,
+              document.getElementById('swal-input3').value,
+              document.getElementById('swal-input4').value
+            ]
+          }
+        })
+          .then(result => {
+            if (result.isConfirmed) {
+              this.addProductPayload = {
+                name: result.value[1],
+                image_url: result.value[0],
+                price: result.value[2],
+                stock: result.value[3]
+              }
+              return Swal.fire({
+                title: 'Select Category !',
+                input: 'select',
+                inputOptions: objCategories,
+                inputPlaceholder: 'Select a category',
+                showCancelButton: true,
+                inputValidator: (value) => {
+                  return new Promise((resolve) => {
+                    if (!value) {
+                      resolve('You need to select category')
+                    } else {
+                      resolve()
+                    }
+                  })
+                }
+              })
+            }
+          })
+          .then(result => {
+            if (result.isConfirmed) {
+              this.addProductPayload.CategoryId = result.value
+              return this.$store.dispatch('addProduct', this.addProductPayload)
+            }
+          })
+          .then(() => {
+            this.$store.dispatch('getProducts')
+          })
+          .catch(err => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: err.response.data.message + '!'
+            })
+          })
+      } else {
+        Swal.fire('Please login first')
+      }
+    },
     addCategory () {
       if (!this.$store.state.loggedIn) {
         Swal.fire('Please login first')
@@ -212,11 +289,18 @@ export default {
           .then((result) => {
             if (result.isConfirmed) {
               this.addCategoryPayload.name = result.value
-              this.$store.dispatch('addCategory', this.addCategoryPayload)
+              return this.$store.dispatch('addCategory', this.addCategoryPayload)
             }
           })
-          .catch((err) => {
-            console.log(err)
+          .then(() => {
+            this.$store.dispatch('getCategories')
+          })
+          .catch(err => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: err.response.data.message + '!'
+            })
           })
       }
     },
@@ -246,11 +330,18 @@ export default {
         })
           .then((result) => {
             if (result.isConfirmed) {
-              this.$store.dispatch('deleteCategory', result.value)
+              return this.$store.dispatch('deleteCategory', result.value)
             }
           })
-          .catch((err) => {
-            console.log(err)
+          .then(() => {
+            this.$store.dispatch('getCategories')
+          })
+          .catch(err => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: err.response.data.message + '!'
+            })
           })
       }
     },
@@ -301,44 +392,6 @@ export default {
         Swal.fire('Please login first')
       }
     },
-    deleteBanner () {
-      if (!this.$store.state.loggedIn) {
-        Swal.fire('Please login first')
-      } else {
-        const objBanners = {}
-        this.banners.forEach((element) => {
-          objBanners[element.id] = element.name
-        })
-        if (!this.$store.state.loggedIn) {
-          Swal.fire('Please login first')
-        } else {
-          Swal.fire({
-            title: 'Select Banner !',
-            input: 'select',
-            inputOptions: objBanners,
-            inputPlaceholder: 'Select a banner',
-            showCancelButton: true,
-            inputValidator: (value) => {
-              return new Promise((resolve) => {
-                if (!value) {
-                  resolve('You need to select banner')
-                } else {
-                  resolve()
-                }
-              })
-            }
-          })
-            .then((result) => {
-              if (result.isConfirmed) {
-                this.$store.dispatch('deleteBanners', result.value)
-              }
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-        }
-      }
-    },
     showProducts () {
       this.show = 'products'
     }
@@ -362,7 +415,6 @@ export default {
       return this.$store.state.categories
     },
     banners () {
-      console.log(this.$store.state.banners)
       return this.$store.state.banners
     },
     userEmail () {
@@ -403,6 +455,7 @@ export default {
 .content {
   display: flex;
   flex-direction: column;
+  max-width: 99%;
 }
 
 .content-category {
@@ -473,7 +526,8 @@ export default {
 }
 
 .overflow-auto {
-  height: 100%;
+  height: 200px;
+  width: 100%;
 }
 
 .product-card {

@@ -71,7 +71,7 @@ export default {
   props: ['product'],
   methods: {
     editPage () {
-      this.$router.push('/edit-product')
+      this.$router.push(`/edit-product/${this.product.id}`)
     },
     deleteProd (id) {
       Swal.fire({

@@ -75,6 +75,37 @@ export default new Vuex.Store({
           }
         })
     },
+    addProduct (context, payload) {
+      axios({
+        method: 'POST',
+        url: '/products',
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        },
+        data: payload
+      })
+        .then(() => {
+          context.dispatch('getProduct')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    delete (context, payload) {
+      axios({
+        method: 'DELETE',
+        url: `/products/${payload.id}`,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(() => {
+          context.dispatch('getProduct')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
     getProductById (context, payload) {
       axios({
         method: 'GET',
@@ -90,30 +121,14 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    addProduct (context, payload) {
+    editProduct (context, payload) {
       axios({
-        method: 'POST',
-        url: '/products',
+        method: 'PUT',
+        url: `/products/${payload.id}`,
         headers: {
           access_token: localStorage.getItem('access_token')
         },
         data: payload
-      })
-        .then(() => {
-          context.dispatch('getProduct')
-        })
-        .catch(err => {
-          console.log('malah masuk ke error')
-          console.log(err)
-        })
-    },
-    delete (context, payload) {
-      axios({
-        method: 'DELETE',
-        url: `/products/${payload.id}`,
-        headers: {
-          access_token: localStorage.getItem('access_token')
-        }
       })
         .then(() => {
           context.dispatch('getProduct')

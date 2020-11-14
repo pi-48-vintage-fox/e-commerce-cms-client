@@ -3,12 +3,12 @@
     <Navbar></Navbar>
     <div class="d-flex justify-content-center my-4">
       <div class="bg-dark px-5" style="border-radius: 5px">
-        <form class="mt-4">
+        <form class="mt-4" @submit="editDone">
           <h1 class="h3 mb-4 font-weight-normal text-light">Edit Product</h1>
           <div class="form-group text-left">
             <label for="editName" class="text-light">Name</label>
             <input
-              v-model="name"
+              v-model="prod.name"
               type="text"
               id="editName"
               class="form-control"
@@ -20,7 +20,7 @@
           <div class="form-group text-left">
             <label for="editPrice" class="text-light">Price</label>
             <input
-              v-model="price"
+              v-model="prod.price"
               type="number"
               id="editPrice"
               class="form-control"
@@ -32,7 +32,7 @@
           <div class="form-group text-left">
             <label for="editStock" class="text-light">Stock</label>
             <input
-              v-model="stock"
+              v-model="prod.stock"
               type="number"
               id="editStock"
               class="form-control"
@@ -44,7 +44,7 @@
           <div class="form-group text-left">
             <label for="editURL" class="text-light">Image URL</label>
             <input
-              v-model="imgurl"
+              v-model="prod.image_url"
               type="url"
               id="editURL"
               class="form-control"
@@ -77,6 +77,27 @@ export default {
   methods: {
     backHome () {
       this.$router.push('/')
+    },
+    editDone () {
+      console.log(this.prod)
+      const obj = {
+        id: this.prod.id,
+        name: this.prod.name,
+        price: this.prod.price,
+        stock: this.prod.stock,
+        image_url: this.prod.image_url
+      }
+      this.$store.dispatch('editProduct', obj)
+      this.backHome()
+    }
+  },
+  created () {
+    const id = this.$route.params.id
+    this.$store.dispatch('getProductById', { id: id })
+  },
+  computed: {
+    prod () {
+      return this.$store.state.productById
     }
   }
 }

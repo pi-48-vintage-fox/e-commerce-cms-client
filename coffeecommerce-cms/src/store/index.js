@@ -6,11 +6,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    products: []
+    products: [],
+    filtered: []
   },
   mutations: {
     SET_PRODUCTS (state, productLists) {
       state.products = productLists
+    },
+    FILTER_PRODUCT (state, productData) {
+      state.filtered = productData
     }
   },
   actions: {
@@ -23,7 +27,25 @@ export default new Vuex.Store({
         headers: { accessToken }
       })
         .then(({ data }) => {
+          console.log(data, 'fetch')
           context.commit('SET_PRODUCTS', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    filterProduct (context, payload) {
+      // linter mengatakan access token harus dalam camel case
+      const accessToken = localStorage.getItem('access_token')
+
+      axios({
+        method: 'GET',
+        url: `/products/filter/${payload.product.id}`,
+        headers: { accessToken }
+      })
+        .then(({ data }) => {
+          console.log(data)
+          context.commit('FILTER_PRODUCT', data)
         })
         .catch(err => {
           console.log(err)
@@ -66,7 +88,7 @@ export default new Vuex.Store({
     editProduct ({ dispatch }, payload) {
       const accessToken = localStorage.getItem('access_token')
       return axios({
-        method: 'POST',
+        method: 'PUT',
         url: `/products/${payload.id}`,
         headers: { accessToken },
         data: {

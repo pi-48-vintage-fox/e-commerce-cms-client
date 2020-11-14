@@ -51,7 +51,7 @@
 
 <script>
 export default {
-  name: "AddProduct",
+  name: 'AddProduct',
   data () {
     return {
       name: '',
@@ -61,8 +61,8 @@ export default {
     }
   },
   methods: {
-    back() {
-      this.$router.push("/");
+    back () {
+      this.$router.push('/')
     },
     addingProduct () {
       this.$store.dispatch('addProduct', { name: this.name, image_url: this.image_url, price: +this.price, stock: +this.stock })
@@ -74,8 +74,8 @@ export default {
           this.errorMessage = err
         })
     }
-  },
-};
+  }
+}
 </script>
 
 <style>

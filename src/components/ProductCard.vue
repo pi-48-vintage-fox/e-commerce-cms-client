@@ -12,10 +12,22 @@
           <h4>
             <b>{{ product.name }}</b>
           </h4>
-          <p>Price :  Rp {{product.price.toLocaleString('id-ID')}}</p>
-          <p>Stock : {{product.stock}}</p>
-          <button type="button" class="btn btn-secondary" @click.prevent="getProductById">Edit</button>
-          <button type="button" class="btn btn-danger" @click.prevent="deleteProduct">Delete</button>
+          <p>Price : Rp {{ product.price.toLocaleString("id-ID") }}</p>
+          <p>Stock : {{ product.stock }}</p>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            @click.prevent="getProductById"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            @click.prevent="deleteProduct"
+          >
+            Delete
+          </button>
         </div>
       </div>
     </div>
@@ -23,27 +35,33 @@
 </template>
 
 <script>
+import swal from "sweetalert";
 export default {
-  name: 'ProductCard',
-  props: ['product'],
+  name: "ProductCard",
+  props: ["product"],
   methods: {
-    getProductById () {
-      this.$store.dispatch('getProductById', this.product.id)
-        .then(() => {
-          this.$router.push(`/editProduct/${this.product.id}`)
-        })
+    getProductById() {
+      this.$store.dispatch("getProductById", this.product.id).then(() => {
+        this.$router.push(`/editProduct/${this.product.id}`);
+      });
     },
-    deleteProduct () {
-      this.$store.dispatch('deleteProduct', this.product.id)
+    deleteProduct() {
+      swal({
+        title: "Good job!",
+        text: `${this.product.name} has been deleted!`,
+        icon: "success"
+      });
+      this.$store
+        .dispatch("deleteProduct", this.product.id)
         .then(() => {
-          return this.$store.dispatch('fetchProducts')
+          return this.$store.dispatch("fetchProducts");
         })
-        .catch((err) => {
-          console.log(err)
-        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
-}
+};
 </script>
 
 <style>

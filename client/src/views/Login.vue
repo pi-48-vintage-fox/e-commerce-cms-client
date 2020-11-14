@@ -53,7 +53,6 @@
 </template>
 
 <script>
-// import Swal from 'sweetalert2'
 export default {
   name: 'Login',
   data () {
@@ -69,7 +68,12 @@ export default {
         password: this.password
       }
       this.$store.dispatch('login', obj)
-      this.$router.push('/')
+        .then(() => {
+          this.$router.push('/')
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }

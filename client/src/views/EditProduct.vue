@@ -69,6 +69,7 @@
 
 <script>
 import Navbar from '../components/Navbar'
+import Swal from 'sweetalert2'
 export default {
   name: 'EditProduct',
   components: {
@@ -79,7 +80,6 @@ export default {
       this.$router.push('/')
     },
     editDone () {
-      console.log(this.prod)
       const obj = {
         id: this.prod.id,
         name: this.prod.name,
@@ -88,6 +88,7 @@ export default {
         image_url: this.prod.image_url
       }
       this.$store.dispatch('editProduct', obj)
+      Swal.fire('Successful', 'The product has been updated!', 'success')
       this.backHome()
     }
   },

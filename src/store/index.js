@@ -1,7 +1,9 @@
+/* eslint-disable handle-callback-err */
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from '../config/axios'
 import router from '../router/index'
+import Swal from 'sweetalert2'
 
 Vue.use(Vuex)
 
@@ -26,12 +28,33 @@ export default new Vuex.Store({
         data: payload
       })
         .then(response => {
-          // console.log(response.data)
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          Toast.fire({
+            icon: 'success',
+            title: 'Signed in successfully'
+          })
           localStorage.setItem('access_token', response.data.access_token)
           localStorage.setItem('name', response.data.name)
           router.push({ path: '/admin' })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          Swal.fire({
+            title: `${err.response.data.errorMsg}`,
+            // text: 'Do you want to continue',
+            icon: 'error'
+            // confirmButtonText: 'Cool'
+          })
+        })
     },
     fetchProducts (context) {
       axios({
@@ -44,7 +67,7 @@ export default new Vuex.Store({
         .then(response => {
           context.commit('FETCH_PRODUCTS', response.data)
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err.response))
     },
     addProduct (context, payload) {
       // console.log(context)
@@ -57,9 +80,18 @@ export default new Vuex.Store({
         data: payload
       })
         .then(response => {
+          Swal.fire({
+            title: 'Success add Product',
+            icon: 'success'
+          })
           context.dispatch('fetchProducts')
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          Swal.fire({
+            title: `${err.response.data.errorMsg}`,
+            icon: 'error'
+          })
+        })
     },
     deleteProduct (context, payload) {
       axios({
@@ -84,10 +116,19 @@ export default new Vuex.Store({
         data: payload.data
       })
         .then(response => {
+          Swal.fire({
+            title: 'Success edit Product',
+            icon: 'success'
+          })
           context.dispatch('fetchProducts')
           router.push({ path: '/admin/products' })
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          Swal.fire({
+            title: `${err.response.data.errorMsg}`,
+            icon: 'error'
+          })
+        })
     }
   },
   getters: {

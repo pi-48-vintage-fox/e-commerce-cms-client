@@ -26,7 +26,7 @@
 import swal from 'sweetalert2'
 export default {
   name: 'Navbar',
-  data() {
+  data () {
     return {
       isHome: false
     }
@@ -42,10 +42,10 @@ export default {
         cancelButtonColor: '#e84118',
         confirmButtonText: 'Yes, i want'
       })
-      .then((result) => {
-        if (result.isConfirmed) {
-          localStorage.clear()
-          this.$router.push('/login')
+        .then((result) => {
+          if (result.isConfirmed) {
+            localStorage.clear()
+            this.$router.push('/login')
           }
         })
     },

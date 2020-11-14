@@ -7,9 +7,9 @@
     <td class="align-middle">{{ product.price }}</td>
     <td class="align-middle">{{ product.stock }}</td>
     <td class="align-middle">
-      <button @click.prevent="editProduct" class="btn btn-outline-secondary btn-lg material-icons">edit</button>  
+      <button @click.prevent="editProduct" class="btn btn-outline-secondary material-icons">edit</button>
       <i class="pisah">d</i>
-      <button @click="deleteProduct(product.id)" class="btn btn-outline-secondary btn-lg material-icons">delete</button>
+      <button @click="deleteProduct(product.id)" class="btn btn-outline-secondary material-icons">delete</button>
     </td>
   </tr>
 </template>
@@ -19,7 +19,7 @@ import Swal from 'sweetalert2'
 export default {
   props: ['product'],
   methods: {
-    editProduct() {
+    editProduct () {
       this.$store.commit('setProduct', this.product)
       this.$store.dispatch('getProduct', this.product.id)
       this.$router.push(`/Edit/${this.product.id}`)
@@ -35,11 +35,11 @@ export default {
         cancelButtonColor: '#e84118',
         confirmButtonText: 'Yes, delete it!'
       })
-      .then((result) => {
-        if (result.isConfirmed) {
-          this.$store.dispatch('deleteProduct', { id })
-        }
-      })
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.$store.dispatch('deleteProduct', { id })
+          }
+        })
     }
   }
 }

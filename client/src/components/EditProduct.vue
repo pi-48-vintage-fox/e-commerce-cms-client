@@ -13,7 +13,7 @@
               <input v-model="name" type="text" id="defaultContactFormName" class="form-control form-control-sm mb-4" placeholder="Name">
 
               <!-- Image Url -->
-              <input v-model="image_url" type="text" id="defaultContactFormEmail" class="form-control form-control-sm mb-4" placeholder="Image URL">
+              <input v-model="imageUrl" type="text" id="defaultContactFormEmail" class="form-control form-control-sm mb-4" placeholder="Image URL">
 
               <!-- Price -->
               <input v-model="price" type="number" id="defaultContactFormEmail" class="form-control form-control-sm mb-4" placeholder="Price">
@@ -32,28 +32,27 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 export default {
   name: 'Edit',
-  data() {
+  data () {
     return {
       id: this.$store.state.product.id,
       name: this.$store.state.product.name,
-      image_url: this.$store.state.product.image_url,
+      imageUrl: this.$store.state.product.image_url,
       price: this.$store.state.product.price,
       stock: this.$store.state.product.stock
     }
   },
   methods: {
     editProduct () {
-      const { id, name, image_url, price, stock } = this
-      console.log(id, name);
-      this.$store.dispatch('editProduct', { id, name, image_url, price, stock })
+      const { id, name, imageUrl, price, stock } = this
+      console.log(id, name)
+      this.$store.dispatch('editProduct', { id, name, imageUrl, price, stock })
         .then(() => {
           this.$router.push('/')
         })
         .catch(err => {
-          console.log(err);
+          console.log(err)
         })
     },
     cancelButton () {

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Navbar/>
-    
+
     <div class="container-fluid mt-5">
       <h1>List Product</h1>
       <hr>

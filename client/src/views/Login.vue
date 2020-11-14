@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import axios from '../config/axios'
+import axios from 'axios'
 export default {
   name: 'Login',
   data () {
@@ -36,7 +36,7 @@ export default {
     login () {
       axios({
         method: 'POST',
-        url: '/login',
+        url: 'https://e-commerce-fox.herokuapp.com/login',
         data: {
           email: this.email,
           password: this.password

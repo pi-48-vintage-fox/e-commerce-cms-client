@@ -25,7 +25,7 @@ export default new Vuex.Store({
     fetchProducts (context, payload) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/products',
+        url: 'https://e-commerce-fox.herokuapp.com/products',
         headers: {
           access_token: localStorage.getItem('access_token')
         }
@@ -39,26 +39,26 @@ export default new Vuex.Store({
         })
     },
 
-    getProduct({ commit }, id) {
+    getProduct ({ commit }, id) {
       axios({
         method: 'GET',
-        url: `http://localhost:3000/products/${id}`,
+        url: `https://e-commerce-fox.herokuapp.com/products/${id}`,
         headers: {
           access_token: localStorage.getItem('access_token')
         }
       })
-      .then(response => {
-        commit('setProductById', response.data.product)
-      })
-      .catch(err => {
-        console.log(err);
-      })
+        .then(response => {
+          commit('setProductById', response.data.product)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
 
     deleteProduct ({ dispatch }, payload) {
       axios({
         method: 'DELETE',
-        url: `http://localhost:3000/products/${payload.id}`,
+        url: `https://e-commerce-fox.herokuapp.com/products/${payload.id}`,
         headers: {
           access_token: localStorage.getItem('access_token')
         }
@@ -71,16 +71,50 @@ export default new Vuex.Store({
         })
     },
 
-    addProduct ({ dispatch }, payload) {
+    addProduct (context, payload) {
       return axios({
         method: 'POST',
-        url: 'http://localhost:3000/products',
+        url: 'https://e-commerce-fox.herokuapp.com/products',
         headers: {
           access_token: localStorage.getItem('access_token')
         },
         data: {
           name: payload.name,
-          image_url: payload.image_url,
+          image_url: payload.imageUrl,
+          price: payload.price,
+          stock: payload.stock
+        }
+      })
+      // .then(({ data }) => {
+      //   Swal.fire(
+      //     'Success',
+      //     `Success added product ${data.name}.`,
+      //     'success'
+      //   )
+      //   dispatch('fetchProducts')
+      // })
+      // .catch(({ response }) => {
+      //   // Swal.fire(
+      //   //   'Failed',
+      //   //   `${response.data.message}`,
+      //   //   'error'
+      //   // )
+      //   router.push('/Add')
+      // })
+
+    },
+
+    editProduct (context, payload) {
+      return axios({
+        method: 'PUT',
+        // url: `http:localhost:3000/products/${payload.id}`,
+        url: `https://e-commerce-fox.herokuapp.com/products/${payload.id}`,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        },
+        data: {
+          name: payload.name,
+          image_url: payload.imageUrl,
           price: payload.price,
           stock: payload.stock
         }
@@ -88,51 +122,19 @@ export default new Vuex.Store({
         .then(({ data }) => {
           Swal.fire(
             'Success',
-            `Success added product ${data.name}.`,
-            'success'
+          `Success Edited ${data.name}.`,
+          'success'
           )
-          dispatch('fetchProducts')
+          context.dispatch('fetchProducts')
         })
         .catch(({ response }) => {
           Swal.fire(
             'Failed',
-            `${response.data.message}`,
-            'error'
-          )
-          this.$router.push('/Add')
-        })
-    },
-
-    editProduct(context, payload) {
-      return axios({
-        method: 'PUT',
-        url: `http://localhost:3000/products/${payload.id}`,
-        headers: {
-          access_token: localStorage.getItem('access_token')
-        }, 
-        data: {
-          name: payload.name,
-          image_url: payload.image_url,
-          price: payload.price,
-          stock: payload.stock
-        }
-      })
-      .then(({ data }) => {
-        Swal.fire(
-          'Success',
-          `Success Edited ${data.name}.`,
-          'success'
-        )
-        context.dispatch('fetchProducts')
-      })
-      .catch(({ response }) => {
-        Swal.fire(
-          'Failed',
           `${response.data.message}`,
           'error'
-        )
-        this.$router.push('/Edit')
-      })
+          )
+          this.$router.push('/Edit')
+        })
     }
   },
   modules: {

@@ -13,7 +13,7 @@
               <input v-model="name" type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="Name">
 
               <!-- Image Url -->
-              <input v-model="image_url" type="text" id="defaultContactFormEmail" class="form-control mb-4" placeholder="Image URL">
+              <input v-model="imageUrl" type="text" id="defaultContactFormEmail" class="form-control mb-4" placeholder="Image URL">
 
               <!-- Price -->
               <input v-model="price" type="number" id="defaultContactFormEmail" class="form-control mb-4" placeholder="Price">
@@ -23,7 +23,7 @@
 
               <!-- Send button -->
               <button class="btn btn-info btn-block" type="submit">Submit</button>
-              <button @click="cancelButton" class="btn cancel btn-outline-light btn-block" type="" >Cancel</button>
+              <button @click="cancelButton" class="btn cancel btn-outline-light btn-block" type="">Cancel</button>
           </form>
         </div>
       </div>
@@ -37,22 +37,41 @@ export default {
   data () {
     return {
       name: '',
-      image_url: '',
-      price: '',
-      stock: ''
+      imageUrl: '',
+      price: 0,
+      stock: 0
     }
   },
   methods: {
     addProduct () {
-      const { name, image_url, price, stock } = this
-      console.log(name);
-      this.$store.dispatch('addProduct', { name, image_url, price, stock })
-        .then(() => {
-          this.$router.push('/')
+      const { name, imageUrl, price, stock } = this
+      console.log(name, imageUrl, price);
+      this.$store.dispatch('addProduct', { name, imageUrl, price, stock })
+          .then(({ data }) => {
+          Swal.fire(
+            'Success',
+            `Success added product ${data.name}.`,
+            'success'
+          )
+          this.$dispatch('fetchProducts')
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire(
+            'Failed',
+            `${response.data.message}`,
+            'error'
+          )
+          // console.log(err);
+          this.$router.push('/')
         })
+
+      // console.log(name, imageUrl)
+      //   .then(() => {
+      //     this.$router.push('/')
+      //   })
+      //   .catch(err => {
+      //     console.log(err)
+      //   })
     },
     cancelButton () {
       this.$router.push('/')
@@ -83,6 +102,7 @@ export default {
     box-shadow: 1px 2px 2px #888888;
   }
   .cancel {
+    color: white;
     background-color: #e84118;
   }
 </style>

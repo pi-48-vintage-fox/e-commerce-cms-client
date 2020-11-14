@@ -43,7 +43,7 @@ export default new Vuex.Store({
     addProduct (context, payload) {
       const accessToken = localStorage.getItem('access_token')
       return axios({
-        url: 'products',
+        url: '/products',
         method: 'POST',
         data: {
           name: payload.name,
@@ -60,7 +60,7 @@ export default new Vuex.Store({
     addCheckout (context, payload) {
       const accessToken = localStorage.getItem('access_token')
       return axios({
-        url: 'checkout',
+        url: '/checkout',
         method: 'POST',
         data: {
           name: payload.name,
@@ -83,6 +83,17 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
+    addCatogory (context, payload) {
+      const accessToken = localStorage.getItem('access_token')
+      return axios({
+        url: '/categories',
+        method: 'POST',
+        data: payload,
+        headers: {
+          access_token: accessToken
+        }
+      })
+    },
     getProductById (context, id) {
       axios({
         url: `/products/${+id}`,
@@ -95,7 +106,7 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    editProduct (context, payload, id) {
+    editProduct (context, payload) {
       return axios({
         url: `/products/${+payload.id}`,
         method: 'PUT',
@@ -108,9 +119,6 @@ export default new Vuex.Store({
         },
         headers: {
           access_token: localStorage.getItem('access_token')
-        },
-        params: {
-          id: id
         }
       })
     },
@@ -154,6 +162,15 @@ export default new Vuex.Store({
           access_token: accessToken
         },
         data: payload
+      })
+    },
+    deleteBanner (context, id) {
+      return axios({
+        url: `/banner/${id}`,
+        method: 'DELETE',
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
       })
     }
   },

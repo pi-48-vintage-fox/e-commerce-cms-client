@@ -3,25 +3,23 @@
     <div class="col-4">
       <form @submit.prevent="editProduct">
         <div class="form-group">
-          <input type="text" class="form-control" :value="product.name">
+          <input type="text" class="form-control" v-model="product.name">
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" :value="product.image_url">
+          <input type="text" class="form-control" v-model="product.image_url">
         </div>
         <div class="form-group">
-          <input type="number" class="form-control" :value="product.price">
+          <input type="number" class="form-control" v-model="product.price">
         </div>
         <div class="form-group">
-          <input type="number" class="form-control" :value="product.stock">
+          <input type="number" class="form-control" v-model="product.stock">
         </div>
         <div class="form-group">
-          <select class="form-control" id="exampleFormControlSelect1">
-            <option v-for="category in categories" :key="category.id"
-            :value="category.id"
+          <select class="form-control" id="exampleFormControlSelect1" v-model="product.CategoryId">
+            <ListCategory v-for="category in categories" :key="category.id"
+            :category="category"
             :selected="category.id === product.CategoryId"
-            >
-            {{ category.name }}
-            </option>
+            />
           </select>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -31,18 +29,11 @@
 </template>
 
 <script>
+import ListCategory from '@/components/ListCategory'
 export default {
   name: 'EditProduct',
-  data () {
-    return {
-      updateProduct: {
-        name: '',
-        image_url: '',
-        price: '',
-        stock: '',
-        CategoryId: ''
-      }
-    }
+  components: {
+    ListCategory
   },
   methods: {
     getProductById () {
@@ -53,16 +44,8 @@ export default {
       this.$store.dispatch('fetchCategories')
     },
     editProduct () {
-      const id = this.$route.params.id
-      const updatedProduct = {
-        name: this.updateProduct.name,
-        image_url: this.updateProduct.image_url,
-        price: this.updateProduct.price,
-        stock: this.updateProduct.stock,
-        CategoryId: this.updateProduct.CategoryId
-      }
-
-      this.$store.dispatch('editProduct', updatedProduct, id)
+      const updatedProduct = this.product
+      this.$store.dispatch('editProduct', updatedProduct)
         .then(({ result }) => {
           this.$router.push({ name: 'ProductDashboard' })
         }).catch((err) => {

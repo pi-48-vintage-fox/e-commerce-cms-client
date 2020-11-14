@@ -43,7 +43,7 @@
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Nama</th>
-          <th scope="col">Image URL</th>
+          <th scope="col">Image</th>
           <th scope="col">Price</th>
           <th scope="col">Stock</th>
           <th scope="col">Category</th>

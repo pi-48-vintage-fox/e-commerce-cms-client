@@ -2,7 +2,7 @@
   <tr>
       <td>{{ product.id }}</td>
       <td>{{ product.name }}</td>
-      <td><img :src="product.image_url" alt=""></td>
+      <td><img :src="product.image_url" style="height: 50px" alt=""></td>
       <td>{{ product.price }}</td>
       <td>{{ product.stock }}</td>
       <td>{{ product.Category.name }}</td>

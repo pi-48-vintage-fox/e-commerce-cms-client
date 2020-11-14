@@ -121,13 +121,11 @@
 export default {
   name: 'Products',
   data: () => ({
-    allCheck: false,
     selected: [],
-    showConfirmDelete: false
+    allCheck: false,
+    showConfirmDelete: false,
   }),
-  created () {
-    console.log(this.$route.query.category)
-  },
+
   methods: {
     deleteProduct (id) {
       this.showConfirmDelete = false
@@ -139,9 +137,18 @@ export default {
       this.$router.push('/editproduct/' + id)
     }
   },
+  created () {
+    if (!this.$route.params.categoryId) {
+      console.log('no cat id')
+      this.$store.dispatch('fetchProducts')
+    } else {
+      console.log('cat id', this.$route.params.categoryId)
+      this.$store.dispatch('fetchProductsByCategory', this.$route.params.categoryId)
+    }
+  },
   computed: {
     products () {
-      return this.$store.state.products
+      return this.$route.params.categoryId ? this.$store.state.filteredProducts : this.$store.state.products
     }
   }
 }

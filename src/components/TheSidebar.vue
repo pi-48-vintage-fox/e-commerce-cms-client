@@ -32,28 +32,29 @@
             <span @click="gotoProducts" >Products</span>
           </vs-sidebar-item>
 
-          <vs-sidebar-group>
-            <template #header>
-              <vs-sidebar-item arrow>
+          <!-- <vs-sidebar-group> -->
+            <!-- <template #header> -->
+              <vs-sidebar-item >
                 <template #icon>
                   <i class='material-icons bx bx-group'>category</i>
                 </template>
-                Categories
+                CATEGORIES
               </vs-sidebar-item>
-            </template>
+            <!-- </template> -->
 
             <vs-sidebar-item
               v-for="cat in categories"
               :key="cat.id"
+              :id="String(cat.id)"
               >
             <template #icon>
-              <i class="material-icons md-16">grass</i>
+              <i class="material-icons md-16"></i>
             </template>
             <span @click="gotoCategory(cat.id)">
             {{cat.name}}
             </span>
           </vs-sidebar-item>
-        </vs-sidebar-group>
+        <!-- </vs-sidebar-group> -->
 
         <template #footer>
           <!-- <vs-row class="center"> -->
@@ -90,6 +91,7 @@ export default {
     },
     gotoCategory (id) {
       console.log('category', id)
+      this.$router.push(`/products/${id}`)
     },
     gotoHome () {
       console.log('goto home')

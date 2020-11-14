@@ -27,6 +27,11 @@ const routes = [
         component: Products
       },
       {
+        path: 'products/:categoryId',
+        name: 'ProductsByCategory',
+        component: Products
+      },
+      {
         path: 'addproduct',
         component: ProductAdd
       },

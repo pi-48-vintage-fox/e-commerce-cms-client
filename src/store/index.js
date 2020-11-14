@@ -10,21 +10,26 @@ export default new Vuex.Store({
   state: {
     categories: [],
     products: [],
+    filteredProducts: [],
     banners: [],
     user: {}
   },
   mutations: {
-    setUser (state, user) {
+    SET_USER (state, user) {
       console.log('setting user', user)
       state.user = user
     },
 
-    setCategories (state, categories) {
+    SET_CATEGORIES (state, categories) {
       state.categories = categories
     },
 
-    setProducts (state, products) {
+    SET_PRODUCTS (state, products) {
       state.products = products
+    },
+
+    SET_FILTERED_PRODUCTS (state, products) {
+      state.filteredProducts = products
     }
 
   },
@@ -100,7 +105,7 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           console.log(data, '<<< user data')
-          commit('setUser', data)
+          commit('SET_USER', data)
         })
         .catch((err) => {
           console.log("Error fetching user's details:", err)
@@ -117,7 +122,7 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           console.log(data, '<<<< categories')
-          commit('setCategories', data)
+          commit('SET_CATEGORIES', data)
         })
         .catch((err) => {
           console.log(err)
@@ -137,7 +142,7 @@ export default new Vuex.Store({
           data.forEach(el => {
             el.price = toCurrencyFormat(el.price)
           })
-          commit('setProducts', data)
+          commit('SET_PRODUCTS', data)
         })
         .catch(err => {
           console.log(err)
@@ -147,7 +152,22 @@ export default new Vuex.Store({
           })
         })
     },
-    fetchProductDetails ({ commit }, id) {
+    fetchProductsByCategory ({ commit }, categoryId) {
+      axios({
+        method: 'GET',
+        url: '/products?category=' + categoryId,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          commit('SET_FILTERED_PRODUCTS', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    fetchProductDetails (_, id) {
       return axios({
         method: 'GET',
         url: '/products/' + id,

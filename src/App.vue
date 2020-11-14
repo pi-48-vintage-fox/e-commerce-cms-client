@@ -1,16 +1,5 @@
 <template>
   <div id="app">
-
-    <!-- <Home
-        v-if="page === 'home-page'"
-        @showMessage="showMessage"
-        @changePage="changePage"
-      />
-    <Landing
-      v-if="page === 'landing-page'"
-      @changePage="changePage"
-      @showMessage="showMessage"
-    /> -->
     <router-view></router-view>
   </div>
 </template>

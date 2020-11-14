@@ -144,7 +144,7 @@ export default {
         },
         (error, result) => {
           if (!error && result && result.event === 'success') {
-            if (origin === 'add') {
+            if (origin === 'insert') {
               this.isInsertProductImagePreview = true
               this.insertProductImage = result.info.url
               this.newProduct.image_url = result.info.url

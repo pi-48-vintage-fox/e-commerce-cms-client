@@ -38,7 +38,7 @@
               </tr>
           </tbody>
       </table>
-    <!-- <b-table bordered :items="products"></b-table> -->
+    <!-- <b-table striped bordered :items="products"></b-table> -->
   </div>
 </template>
 

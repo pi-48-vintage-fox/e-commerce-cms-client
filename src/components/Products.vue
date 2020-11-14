@@ -2,7 +2,7 @@
     <div>
         <div class="row">
             <div class="col-sm-2 col-auto" id="add-product">
-                <form action="" @submit.prevent="addProduct">
+                <form action="" @submit.prevent="addProduct" class="mt-4">
                     <h1>Add new Product</h1>
                     <div class="form-group">
                         <label for="product-image-add" class="text-uppercase">product image</label>
@@ -37,7 +37,7 @@
                 </form>
             </div>
             <div class="col-sm-10 col-auto">
-                <ProductList/>
+                <ProductList class="mt-4 mx-2"/>
             </div>
         </div>
     </div>
@@ -82,6 +82,10 @@ export default {
       this.XL_add = ''
       this.price_add = ''
     }
+  },
+  created () {
+    console.log(this)
+    // this.$store.commit('ACTIVE_PAGE', this.$el.baseURI)
   }
 }
 </script>

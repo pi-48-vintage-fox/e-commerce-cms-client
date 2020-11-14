@@ -21,7 +21,7 @@
           <div class="form-group">
             <label for="">Password</label> <br />
             <input
-              type="text"
+              type="password"
               name=""
               id=""
               class="form-control"
@@ -54,6 +54,8 @@ export default {
         password: this.password_login
       }
       this.$store.dispatch('loginAdmin', payload)
+      this.email_login = ''
+      this.password_login = ''
     }
   }
 }

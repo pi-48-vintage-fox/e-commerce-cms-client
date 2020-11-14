@@ -1,42 +1,39 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import store from '../store'
 
 // Lazy loading components
 const Login = () => import('../pages/LoginPage.vue')
 const Homepage = () => import('../pages/MainPage.vue')
-const Products = () => import('../components/Products')
 Vue.use(Router)
-
-const ifAuthenticated = (to, from, next) => {
-  if (store.getters.isAuthenticated) {
-    next()
-    return
-  }
-  next('/')
-}
-const ifNotAuthenticated = (to, from, next) => {
-  if (!store.getters.isAuthenticated) {
-    next()
-    return
-  }
-  next('/dashboard')
-}
 
 export default new Router({
   routes: [
     {
       path: '/',
       component: Login,
-      beforeEnter: ifNotAuthenticated
+      beforeEnter (to, from, next) {
+        if (localStorage.access_token) {
+          next('/dashboard')
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/dashboard',
       component: Homepage,
       children: [
-        { path: '/products', component: Products }
+        { path: '/products', component: () => import('../pages/ProductsPage') },
+        { path: '/appearance', component: () => import('../pages/Appearance.vue') }
       ],
-      beforeEnter: ifAuthenticated
+      beforeEnter (to, from, next) {
+        if (localStorage.access_token) {
+          next()
+        } else {
+          next('/')
+        }
+      }
     }
-  ]
+  ],
+  linkActiveClass: 'active'
 })

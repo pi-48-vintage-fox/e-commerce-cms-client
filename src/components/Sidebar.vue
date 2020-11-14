@@ -7,7 +7,7 @@
     </div>
     <div class="sidebar-nav">
       <div class="nav-items">
-        <router-link to="/products" class="nav-item active">
+        <router-link to="/products" class="nav-item">
           <div class="nav-icon">
             <i class="fas fa-boxes"></i>
           </div>
@@ -31,7 +31,7 @@
           <div class="nav-icon">
             <i class="fas fa-sign-out-alt"></i>
           </div>
-          <div class="nav-label">
+          <div class="nav-label" @click="logout">
             Log Out
           </div>
         </div>
@@ -42,6 +42,13 @@
 
 <script>
 export default {
-  name: 'Sidebar'
+  name: 'Sidebar',
+  methods: {
+    logout () {
+      this.$store.commit('LOGOUT')
+      this.$router.push('/')
+      this.$vToastify.warning('Byeee :(', 'sad..')
+    }
+  }
 }
 </script>

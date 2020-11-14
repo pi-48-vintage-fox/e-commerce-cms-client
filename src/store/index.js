@@ -82,7 +82,7 @@ export default new Vuex.Store({
           Vue.toasted.global.errorMessage(err.response.data.msg)
         })
     },
-    submitLoginForm ({ commit }, payload) {
+    submitLoginForm (_, payload) {
       return axios({
         method: 'POST',
         url: '/login',

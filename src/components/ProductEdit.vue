@@ -12,6 +12,7 @@
     <vs-input label="Price" type="number" v-model="price" name="price"/>
     <!-- <label for="stock">Stock</label> -->
     <vs-input label="Stock" type="number" v-model="stock" name="stock"/>
+    <vs-input label="Image URL" type="text" v-model="imageUrl" name="imageUrl"/>
     <label for="categories">Category</label>
     <select filter name="categories" label="Category" v-model="ProductCategoryId">
       <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{cat.name}}</option>
@@ -70,6 +71,7 @@ export default {
         description: this.description,
         price: this.price,
         stock: this.stock,
+        imageUrl: this.imageUrl,
         ProductCategoryId: this.ProductCategoryId
       })
     }
@@ -88,7 +90,7 @@ export default {
   display: flex;
   flex-direction: column
 } */
-  .vs-input-parent {
+  .container-edit-form .vs-input-parent {
     /* min-width: 300px */
     margin-bottom: 2rem;
     width: 100%;
@@ -110,6 +112,7 @@ export default {
   textarea, select {
     border-radius: 12px;
     background-color: rgb(244, 247, 248);
+    /* background-color: rgb(192, 144, 231); */
     border: 0 ;
     padding: 7px 13px 7px 10px;
     outline: none;

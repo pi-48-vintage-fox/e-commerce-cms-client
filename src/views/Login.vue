@@ -10,21 +10,23 @@
         </template>
         <template #img>
           <!-- <img src="https://images.unsplash.com/photo-1533038590840-1cde6e668a91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" alt=""> -->
-          <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" alt="">
+          <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=450&q=80" alt="">
         </template>
         <template #text>
             <form class="con-form" @submit.prevent="submitLoginForm">
-              <vs-input v-model="email" border label="Email" placeholder="admin@mail.com">
-                <template #icon>
-                  @
-                </template>
-              </vs-input>
-              <vs-input type="password" v-model="password" border label="Password" placeholder="1234">
-                <template #icon>
-                  <!-- <i class='bx bxs-lock'></i> -->
-                  <i class='material-icons md-16 bx bxs-lock'>lock</i>
-                </template>
-              </vs-input>
+              <div class="input-group">
+                <vs-input v-model="email" border  placeholder="admin@mail.com">
+                  <template #icon>
+                    @
+                  </template>
+                </vs-input>
+                <vs-input type="password" v-model="password" border placeholder="1234">
+                  <template #icon>
+                    <!-- <i class='bx bxs-lock'></i> -->
+                    <i class='material-icons md-16 bx bxs-lock'>lock</i>
+                  </template>
+                </vs-input>
+              </div>
 
             <div class="footer-dialog">
               <vs-button block>
@@ -126,28 +128,37 @@ export default {
     }
   }
 }
+
 </script>
 
-<style lang="stylus">
+<style lang="stylus" >
   getColor(vsColor, alpha = 1)
       unquote("rgba(var(--vs-"+vsColor+"), "+alpha+")")
   getVar(var)
       unquote("var(--vs-"+var+")")
   #landing-page
-    background-image url('https://images.unsplash.com/photo-1475154344886-9d791b8ebeb9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1566&q=80')
-    background-size cover
+    background-color #553F83
   .fullpage
-    height 100vh
+      height 100vh
   .fullheight
-    height 100%
-  .vs-card
-    max-width 600px
-    min-width 500px
+      height 100%
+  .vs-card-content
+    width 500px
+    max-width 500px
+  .vs-card-content.type-3 .vs-card
+    max-width 500px !important
+    min-width 450px !important
+  .vs-card__img
+    max-height 300px
+    background-size cover
   .vs-card__text
-    width 70%
+    max-height 300px
+    width 100%
     display flex
     flex-direction column
-    justify-content space-between
+    justify-content start
+  .input-group
+    margin 1rem 0
   .not-margin
     margin 0px
     font-weight normal
@@ -189,5 +200,5 @@ export default {
     .vs-button
       margin 0px
     .vs-input-parent
-      margin-bottom 1rem
+      margin-bottom 1rem !important
   </style>

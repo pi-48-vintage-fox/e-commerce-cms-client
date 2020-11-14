@@ -70,18 +70,14 @@ export default {
   padding: 0;
 }
 
-body {
-  background-image: url("./assets/vue-bg.png");
-  background-repeat: no-repeat;
-  background-position-x: center;
-}
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   font-size: 1.5em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  background-color: #34495E;
+  background-repeat: repeat-y;
   color: #2c3e50;
 }
 

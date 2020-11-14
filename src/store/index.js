@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     loggedIn: false,
-    products: []
+    products: [],
+    banners: []
   },
   mutations: {
     isLogin (state, payload) {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     insertCategories (state, payloads) {
       state.categories = payloads
+    },
+    insertBanners (state, payloads) {
+      state.banners = payloads
     }
   },
   actions: {
@@ -64,6 +68,12 @@ export default new Vuex.Store({
         method: 'GET',
         url: '/banners'
       })
+        .then(result => {
+          context.commit('insertBanners', result.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     addCategory (context, payload) {
       axios({
@@ -81,6 +91,24 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
+    addBanner (context, payload) {
+      axios({
+        method: 'POST',
+        url: '/banners',
+        headers: { token: localStorage.getItem('token') },
+        data: {
+          title: payload.title,
+          image_url: payload.image_url
+        }
+      })
+        .then((res) => {
+          console.log(res, 'sampe kok')
+          context.dispatch('getBanners')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
     deleteCategory (context, payload) {
       axios({
         method: 'DELETE',
@@ -89,6 +117,19 @@ export default new Vuex.Store({
       })
         .then(() => {
           context.dispatch('getCategories')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    deleteBanner (context, payload) {
+      axios({
+        method: 'DELETE',
+        url: '/banners/' + payload,
+        headers: { token: localStorage.getItem('token') }
+      })
+        .then(() => {
+          context.dispatch('getBanners')
         })
         .catch(err => {
           console.log(err)

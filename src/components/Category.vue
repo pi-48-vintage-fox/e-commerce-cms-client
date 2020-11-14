@@ -8,6 +8,7 @@ export default {
   methods: {
     chose () {
       this.$emit('chose', this.category)
+      this.$emit('showProducts')
     }
   },
   props: ['category']

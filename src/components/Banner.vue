@@ -1,20 +1,17 @@
 <template>
   <div>
-    <div class="product">
+    <div class="banner">
       <div class="col-1">
-        <div class="product-property product-num">{{no}}</div>
+        <div class="banner-property banner-num">{{no}}</div>
+      </div>
+      <div class="col-4">
+        <div class="banner-property banner-image"><img id="banner-image" :src="banner.image_url"></div>
       </div>
       <div class="col-3">
-        <div class="product-property product-image"><img id="product-image" :src="product.image_url"></div>
-      </div>
-      <div class="col-3">
-        <div class="product-property product-name">{{product.name}}</div>
+        <div class="banner-property banner-name">{{banner.title}}</div>
       </div>
       <div class="col-2">
-        <div class="product-property product-price" id="product-price">{{priceInRupiah}}</div>
-      </div>
-      <div class="col-1">
-        <div class="product-property product-stock" id="product-stock">{{product.stock}}</div>
+        <div class="banner-property banner-stock" id="banner-stock">{{banner.status}}</div>
       </div>
       <div class="col-1">
         <button class="btn">
@@ -36,24 +33,18 @@
 
 <script>
 export default {
-  name: 'Product',
-  props: ['product', 'counter'],
+  name: 'Banner',
+  props: ['banner', 'counter'],
   computed: {
     no () {
       return this.counter + 1
-    },
-    priceInRupiah () {
-      var rupiah = ''
-      var angkarev = this.product.price.toString().split('').reverse().join('')
-      for (var i = 0; i < angkarev.length; i++) if (i % 3 === 0) rupiah += angkarev.substr(i, 3) + '.'
-      return 'Rp. ' + rupiah.split('', rupiah.length - 1).reverse().join('')
     }
   }
 }
 </script>
 
 <style scoped>
-#product-image {
+#banner-image {
   border-radius: 5px;
   width: 100%;
   height: auto;
@@ -64,7 +55,7 @@ export default {
   transition: 300ms;
 }
 
-.product {
+.banner {
   align-items: center;
   background-color: #006666;
   display: flex;
@@ -72,12 +63,11 @@ export default {
   justify-content: space-around;
   margin: 10px;
   padding: 10px;
-  width: 99%;
+  width: 100%;
 }
 
 .product-property {
   font-size: 2rem !important;
   color: #42b983;
 }
-
 </style>

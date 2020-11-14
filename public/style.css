@@ -1,0 +1,24 @@
+body {
+    background-image: url('https://i.pinimg.com/originals/26/99/21/2699217b42078c8620aad1c810d6e7f1.jpg');
+    width: 100%;
+}
+
+#login-box {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    height: 100vh;
+}
+
+#slide-banner {
+    height: 80vh;
+    width: 100%;
+}
+
+#add-form {
+    margin: 110px auto;
+}
+
+#edit-form {
+    margin: 110px auto;
+}

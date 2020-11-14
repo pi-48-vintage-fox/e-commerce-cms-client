@@ -1,5 +1,6 @@
 <template>
   <form @submit.prevent="login">
+    <span><p>{{errorMessage}}</p></span>
     <div class="input-group form-group">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -37,17 +38,19 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      errorMessage: ''
     }
   },
   methods: {
     login () {
       this.$store.dispatch('login', { email: this.email, password: this.password })
-        .then(() => {
+        .then((data) => {
           this.$router.push('/')
         })
         .catch(err => {
           console.log(err)
+          this.errorMessage = err
         })
     }
   }

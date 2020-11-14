@@ -3,24 +3,30 @@
 
 html,body{
 background-image: url('https://image.freepik.com/free-photo/top-view-cup-coffee-with-copy-space_23-2148336691.jpg');
-background-size: cover;
-background-repeat: no-repeat;
+background-size:cover;
+background-repeat:repeat-y;
 height: 100%;
+width:100%;
+top:0;
+left:0;
+position:absolute;
+z-index: -1;
 font-family: 'Numans', sans-serif;
 }
 
 .container{
+padding:1rem;
 height: 100%;
 align-content: center;
 }
 
-.card{
+/* .card{
 height: 370px;
 margin-top: auto;
 margin-bottom: auto;
 width: 400px;
 background-color: rgba(0,0,0,0.5) !important;
-}
+} */
 
 .social_icon span{
 font-size: 60px;

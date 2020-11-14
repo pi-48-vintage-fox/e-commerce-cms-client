@@ -27,28 +27,28 @@
 export default {
   name: 'editProduct',
   computed: {
-      dataEdit(){
-          return this.$store.state.dataEdit
-      }
+    dataEdit () {
+      return this.$store.state.dataEdit
+    }
   },
   methods: {
-      editProduct(){
-          const payload = {
-              id:this.$route.params.id,
-              name: this.dataEdit.name,
-              image_url: this.dataEdit.image_url,
-              price: this.dataEdit.price,
-              stock: this.dataEdit.stock
-          }
-          console.log(payload)
-          this.$store.dispatch('editProduct' ,payload)
-            .then(({data})=>{
-                this.$router.push({path: '/Product'})
-            })
-            .catch(err=>{
-                console.log(err)
-            })
+    editProduct () {
+      const payload = {
+        id: this.$route.params.id,
+        name: this.dataEdit.name,
+        image_url: this.dataEdit.image_url,
+        price: this.dataEdit.price,
+        stock: this.dataEdit.stock
       }
+      console.log(payload)
+      this.$store.dispatch('editProduct', payload)
+        .then(({ data }) => {
+          this.$router.push({ path: '/Product' })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
   }
 }
 </script>

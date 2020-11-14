@@ -23,7 +23,7 @@ export default {
     logout () {
       localStorage.clear()
       this.$router.push({ path: '/login' })
-    },
+    }
   }
 }
 </script>

@@ -12,8 +12,8 @@
         <h5 class="card-title">{{item.name}}</h5>
         <p class="card-text">RP.{{item.price.toLocaleString()}}</p>
         <p class="card-text">stock: {{item.stock}}</p>
-        <button class="btn-primary" @click="editProduct(item)">Edit</button> 
-        <button class="btn-danger" @click="deleteProduct(item.id)">delete</button> 
+        <button class="btn-primary" @click="editProduct(item)">Edit</button>
+        <button class="btn-danger" @click="deleteProduct(item.id)">delete</button>
       </div>
       <br>
     </div>
@@ -23,17 +23,17 @@
 
 <script>
 export default {
-    name: 'ProductTable',
-    props: ['products'],
-    methods:{
-        deleteProduct(id){
-            this.$store.dispatch('deleteProduct',id)
-        },
-        editProduct(data){
-            this.$store.commit('EDITPRODUCT', data)
-            this.$router.push({ name: 'editProduct', params: { id: data.id } })
-        }
+  name: 'ProductTable',
+  props: ['products'],
+  methods: {
+    deleteProduct (id) {
+      this.$store.dispatch('deleteProduct', id)
+    },
+    editProduct (data) {
+      this.$store.commit('EDITPRODUCT', data)
+      this.$router.push({ name: 'editProduct', params: { id: data.id } })
     }
+  }
 }
 </script>
 

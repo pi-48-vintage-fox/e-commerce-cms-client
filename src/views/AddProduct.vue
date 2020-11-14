@@ -27,29 +27,29 @@
 <script>
 import Navbar from '../components/Navbar'
 export default {
-    name: 'addProduct',
-    components:{
-        Navbar
-    },
-    data(){
-        return {
-            name: '',
-            image_url: '',
-            price: '',
-            stock: ''
-        }
-    },
-    methods:{
-        addProduct(){
-            const payload ={
-                name: this.name,
-                image_url: this.image_url,
-                price:this.price,
-                stock:this.stock
-            }
-            this.$store.dispatch('addProduct',payload)
-        }
+  name: 'addProduct',
+  components: {
+    Navbar
+  },
+  data () {
+    return {
+      name: '',
+      image_url: '',
+      price: '',
+      stock: ''
     }
+  },
+  methods: {
+    addProduct () {
+      const payload = {
+        name: this.name,
+        image_url: this.image_url,
+        price: this.price,
+        stock: this.stock
+      }
+      this.$store.dispatch('addProduct', payload)
+    }
+  }
 }
 </script>
 

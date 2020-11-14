@@ -32,22 +32,22 @@ export default new Vuex.Store({
           localStorage.setItem('access_token', data.access_token)
         })
     },
-    fetchProduct(context){
+    fetchProduct (context) {
       axios({
-        method:'GET',
-        url:'/product',
-        headers:{
+        method: 'GET',
+        url: '/product',
+        headers: {
           access_token: localStorage.getItem('access_token')
         }
       })
-      .then(({data})=>{
-        context.commit('FETCHPRODUCT', data)
-      })
-      .catch(err=>{
-        console.log(err)
-      })
+        .then(({ data }) => {
+          context.commit('FETCHPRODUCT', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
-    addProduct ( context ,payload){
+    addProduct (context, payload) {
       axios({
         method: 'POST',
         url: '/product',
@@ -61,43 +61,43 @@ export default new Vuex.Store({
           stock: payload.stock
         }
       })
-      .then(({data})=>{
-        router.push({path: '/Product'})
-        context.dispatch('fetchProduct')
-      })
-      .catch(err =>{
-        console.log(err)
-      })
+        .then(({ data }) => {
+          router.push({ path: '/Product' })
+          context.dispatch('fetchProduct')
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
-    deleteProduct(context, id){
+    deleteProduct (context, id) {
       axios({
         method: 'delete',
         url: `/Product/${id}`,
-        headers:{
+        headers: {
           access_token: localStorage.getItem('access_token')
         }
       })
-      .then(()=>{
-        context.dispatch('fetchProduct')
-      })
+        .then(() => {
+          context.dispatch('fetchProduct')
+        })
     },
-    editProduct(context, payload){
+    editProduct (context, payload) {
       axios({
         method: 'PUT',
-        url:`/product/${payload.id}`,
+        url: `/product/${payload.id}`,
         headers: {
           access_token: localStorage.getItem('access_token')
         },
-        data:{
+        data: {
           name: payload.name,
           image_url: payload.image_url,
           price: payload.price,
           stock: payload.stock
         }
       })
-      .then(()=>{
-        router.push({path: '/Product'})
-      })
+        .then(() => {
+          router.push({ path: '/Product' })
+        })
     }
-  },
+  }
 })

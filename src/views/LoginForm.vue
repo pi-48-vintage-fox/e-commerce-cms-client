@@ -27,28 +27,28 @@
 
 <script>
 export default {
-    name: 'LoginForm',
-    data () {
-        return {
-        email: '',
-        password: '',
-        }
-    },
-    methods:{
-        login(){
-            const payload ={
-                email: this.email,
-                password: this.password
-            }
-            this.$store.dispatch('login',payload)
-                .then(()=>{
-                    this.$router.push({path:'/Product'})
-                })
-                .catch((err)=>{
-                console.log(err)
-                })
-        }
+  name: 'LoginForm',
+  data () {
+    return {
+      email: '',
+      password: ''
     }
+  },
+  methods: {
+    login () {
+      const payload = {
+        email: this.email,
+        password: this.password
+      }
+      this.$store.dispatch('login', payload)
+        .then(() => {
+          this.$router.push({ path: '/Product' })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  }
 }
 
 </script>

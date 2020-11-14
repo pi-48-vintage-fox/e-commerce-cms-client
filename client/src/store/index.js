@@ -12,7 +12,6 @@ export default new Vuex.Store({
   mutations: {
     setProducts (state, payload) {
       state.products = payload.products
-      console.log(payload.products, 'ini dimutasi')
     },
     setProductById (state, payload) {
       state.product = payload
@@ -51,7 +50,7 @@ export default new Vuex.Store({
         url: '/products',
         method: 'POST',
         headers: {
-          access_token: payload.access_token
+          access_token: localStorage.getItem('access_token')
         },
         data: {
           name: payload.name,
@@ -70,7 +69,6 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data, 'ini di getById')
           context.commit('setProductById', data)
         })
         .catch(err => {
@@ -82,7 +80,7 @@ export default new Vuex.Store({
         url: '/products/' + payload.id,
         method: 'PUT',
         headers: {
-          access_token: payload.access_token
+          access_token: localStorage.access_token
         },
         data: {
           name: payload.name,
@@ -92,7 +90,6 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data, 'ini di updateProduct store')
           context.commit('setProductByid', data)
         })
     },

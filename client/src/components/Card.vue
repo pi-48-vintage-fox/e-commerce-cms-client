@@ -36,6 +36,7 @@ export default {
         .then(() => {
           this.$router.push(`/edit/${id}`)
         })
+        .catch()
     },
     deleteProduct () {
       this.$swal.fire({

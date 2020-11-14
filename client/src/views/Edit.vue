@@ -24,7 +24,7 @@
                 <input type="text" class="form-control input-text ml-5" v-model="productById.image_url">
               </div>
               <div class="button-submit">
-                <button type="submit" class="btn btn-dark" @click.prevent="submitEdit">Submit</button>
+                <button type="submit" class="btn btn-primary button" @click.prevent="submitEdit">Submit</button>
               </div>
             </form>
         </div>
@@ -43,22 +43,39 @@ export default {
   methods: {
     submitEdit () {
       console.log(this.$route.params, '<<<')
-      const token = localStorage.getItem('access_token')
       const payload = {
         name: this.productById.name,
         price: this.productById.price,
         stock: this.productById.stock,
         image_url: this.productById.image_url,
-        id: this.$route.params.id,
-        access_token: token
+        id: this.$route.params.id
       }
-      this.$store.dispatch('updateProduct', payload)
-        .then(() => {
-          this.$router.push('/')
+      this.$swal.fire({
+        title: 'Do you want to save the changes?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Save',
+        denyButtonText: 'Do not save'
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          return this.$store.dispatch('updateProduct', payload)
+            .then(() => {
+              this.$swal.fire('Saved!', '', 'success')
+            })
+            .then(() => {
+              this.$router.push('/')
+            })
+        } else if (result.isDenied) {
+          this.$swal.fire('Changes are not saved', '', 'info')
+        }
+      }).catch(err => {
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.response.data.msg
         })
-        .catch(err => {
-          console.log(err.response)
-        })
+      })
     }
   },
   components: {

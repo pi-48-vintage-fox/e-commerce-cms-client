@@ -25,7 +25,7 @@
                 <input type="text" class="form-control input-text ml-5" v-model="image_url">
               </div>
               <div class="button-submit">
-                <button type="submit" class="btn btn-dark" @click.prevent="addNewProduct">Submit</button>
+                <button type="submit" class="btn btn-primary button" @click.prevent="addNewProduct">Submit</button>
               </div>
             </form>
         </div>
@@ -51,10 +51,18 @@ export default {
         name: this.product_name,
         image_url: this.image_url,
         price: this.price,
-        stock: this.stock,
-        access_token: localStorage.getItem('access_token')
+        stock: this.stock
       }
       this.$store.dispatch('addProduct', payload)
+        .then(() => {
+          return this.$swal.fire({
+            position: 'mid',
+            icon: 'success',
+            title: 'New Data has been saved',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
         .then(() => {
           this.product_name = ''
           this.price = ''
@@ -80,7 +88,9 @@ export default {
   border-radius: 10px;
   background-color: #69bdd2;
   color: white;
-  text-align: justify
+  text-align: justify;
+  background-image: url('https://images.unsplash.com/photo-1587734195503-904fca47e0e9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80');
+  background-size: cover;
 }
 input[type=text] {
     background: transparent;
@@ -102,5 +112,8 @@ label {
   display: flex;
   justify-content: center;
   width: 100%;
+}
+.button {
+  width: 80%
 }
 </style>

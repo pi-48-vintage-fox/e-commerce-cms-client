@@ -27,7 +27,7 @@ export default new Vuex.Store({
     login (context, payload) {
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/login',
+        url: 'https://frish-commerce.herokuapp.com/login',
         data: payload
       })
         .then(response => {
@@ -51,7 +51,7 @@ export default new Vuex.Store({
     fetchProducts (context, payload) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/products',
+        url: 'https://frish-commerce.herokuapp.com/products',
         headers: {
           access_token: localStorage.access_token
         }
@@ -66,7 +66,7 @@ export default new Vuex.Store({
     deleteProducts ({ dispatch }, payload) {
       axios({
         method: 'DELETE',
-        url: `http://localhost:3000/products/${payload.id}`,
+        url: `https://frish-commerce.herokuapp.com/products/${payload.id}`,
         headers: {
           access_token: localStorage.access_token
         }
@@ -85,7 +85,7 @@ export default new Vuex.Store({
     editProducts ({ dispatch }, payload) {
       axios({
         method: 'PUT',
-        url: `http://localhost:3000/products/${payload.id}`,
+        url: `https://frish-commerce.herokuapp.com/products/${payload.id}`,
         headers: {
           access_token: localStorage.access_token
         },
@@ -117,7 +117,7 @@ export default new Vuex.Store({
     addProducts ({ dispatch }, payload) {
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/products',
+        url: 'https://frish-commerce.herokuapp.com/products',
         headers: {
           access_token: localStorage.access_token
         },

@@ -32,46 +32,48 @@
 </template>
 
 <script>
+// import Swal from 'sweetalert2'
 export default {
   name: 'AddProduct',
   data () {
     return {
       name: '',
       imageUrl: '',
-      price: 0,
-      stock: 0
+      price: '',
+      stock: ''
     }
   },
   methods: {
     addProduct () {
       const { name, imageUrl, price, stock } = this
-      console.log(name, imageUrl, price);
+      console.log(name, imageUrl, price)
       this.$store.dispatch('addProduct', { name, imageUrl, price, stock })
-          .then(({ data }) => {
-          Swal.fire(
-            'Success',
-            `Success added product ${data.name}.`,
-            'success'
-          )
-          this.$dispatch('fetchProducts')
-        })
-        .catch(err => {
-          Swal.fire(
-            'Failed',
-            `${response.data.message}`,
-            'error'
-          )
-          // console.log(err);
-          this.$router.push('/')
-        })
+      .then(() => {
+        this.$router.push('/')
+      })
+      .catch(err => {
+        this.$router.push('/')
 
-      // console.log(name, imageUrl)
-      //   .then(() => {
-      //     this.$router.push('/')
-      //   })
-      //   .catch(err => {
-      //     console.log(err)
-      //   })
+      })
+
+      //   .then(({ data }) => {
+      //   Swal.fire(
+      //     'Success',
+      //     `Success added product ${data.name}.`,
+      //     'success'
+      //   )
+      //   this.$dispatch('fetchProducts')
+      //   this.$router.push('/')
+      // })
+      // .catch(err => {
+      //   Swal.fire(
+      //     'Failed',
+      //     `${response.data.message}`,
+      //     'error'
+      //   )
+      //   // console.log(err);
+      //   this.$router.push('/Add')
+      // })
     },
     cancelButton () {
       this.$router.push('/')

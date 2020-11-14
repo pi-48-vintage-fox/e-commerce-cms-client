@@ -71,7 +71,7 @@ export default new Vuex.Store({
         })
     },
 
-    addProduct (context, payload) {
+    addProduct ({ dispatch }, payload) {
       return axios({
         method: 'POST',
         url: 'https://e-commerce-fox.herokuapp.com/products',
@@ -85,23 +85,21 @@ export default new Vuex.Store({
           stock: payload.stock
         }
       })
-      // .then(({ data }) => {
-      //   Swal.fire(
-      //     'Success',
-      //     `Success added product ${data.name}.`,
-      //     'success'
-      //   )
-      //   dispatch('fetchProducts')
-      // })
-      // .catch(({ response }) => {
-      //   // Swal.fire(
-      //   //   'Failed',
-      //   //   `${response.data.message}`,
-      //   //   'error'
-      //   // )
-      //   router.push('/Add')
-      // })
-
+        .then(({ data }) => {
+          dispatch('fetchProducts')
+          Swal.fire(
+          'Success',
+          `Success added product ${data.name}.`,
+          'success'
+          )
+        })
+        .catch(({ response }) => {
+          Swal.fire(
+            'Failed',
+          `${response.data.message}`,
+          'error'
+          )
+        })
     },
 
     editProduct (context, payload) {
@@ -121,7 +119,7 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           Swal.fire(
-            'Success',
+          'Success',
           `Success Edited ${data.name}.`,
           'success'
           )

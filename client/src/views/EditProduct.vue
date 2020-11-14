@@ -1,7 +1,7 @@
 <template>
   <div>
-    <form @submit.prevent="addproduct" class="box p-3">
-      <h1>Add Product</h1>
+    <form @submit.prevent="editproduct" class="box p-3">
+      <h1>Edit Product</h1>
       <label for="name">Product Name :</label>
       <input v-model="name" id="name" type="text" placeholder="Product Name" required />
       <label for="image_url">Image URL :</label>
@@ -10,7 +10,7 @@
       <input v-model="price" id="price" type="number" min="0" placeholder="Price" required />
       <label for="stock">Stock :</label>
       <input v-model="stock" id="stock" type="number" min="0" placeholder="Stock" required />
-      <button type="submit">Add Product</button>
+      <button type="submit">Edit Product</button>
     <button @click="cancelBtn" type="button">Cancel</button>
     </form>
   </div>
@@ -18,28 +18,25 @@
 
 <script>
 export default {
-  name: 'AddProduct',
+  name: 'EditProduct',
   data () {
     return {
-      name: '',
-      image_url: '',
-      price: 0,
-      stock: 0
     }
   },
   methods: {
-    addproduct () {
+    editproduct () {
       const payload = {
+        id: this.$route.params.id,
         name: this.name,
         image_url: this.image_url,
         price: this.price,
         stock: this.stock
       }
-      this.$store.dispatch('addproduct', payload)
+      this.$store.dispatch('editproduct', payload)
         .then(({ data }) => {
           this.$swal(
-            'CREATED',
-        `Add ${data.name} to product list!`,
+            'SUCCESS',
+        `${data.name} has been edited!`,
         'success'
           )
           this.$router.push('/')
@@ -53,7 +50,42 @@ export default {
         })
     },
     cancelBtn () {
+      this.$store.commit('SET_CURRENT', {})
       this.$router.push('/')
+    }
+  },
+  computed: {
+    name: {
+      get () {
+        return this.$store.state.productName
+      },
+      set (value) {
+        this.$store.commit('SET_NAME', value)
+      }
+    },
+    image_url: {
+      get () {
+        return this.$store.state.productUrl
+      },
+      set (value) {
+        this.$store.commit('SET_URL', value)
+      }
+    },
+    stock: {
+      get () {
+        return this.$store.state.productStock
+      },
+      set (value) {
+        this.$store.commit('SET_STOCK', value)
+      }
+    },
+    price: {
+      get () {
+        return this.$store.state.productPrice
+      },
+      set (value) {
+        this.$store.commit('SET_PRICE', value)
+      }
     }
   }
 }

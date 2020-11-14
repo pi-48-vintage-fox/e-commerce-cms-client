@@ -33,14 +33,14 @@
 </template>
 <script>
 export default {
-    name: 'Navbar',
-    data(){
-      return {
-        currentUser : localStorage.email
-      }
-    },
-    methods:{
-    logout(){
+  name: 'Navbar',
+  data () {
+    return {
+      currentUser: localStorage.email
+    }
+  },
+  methods: {
+    logout () {
       localStorage.clear()
       this.$router.push('/login')
     }

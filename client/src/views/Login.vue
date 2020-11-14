@@ -13,33 +13,37 @@
 
 <script>
 export default {
-  name: "Login",
-  data(){
+  name: 'Login',
+  data () {
     return {
       email: '',
       password: ''
     }
   },
-  methods:{
-    login(){
+  methods: {
+    login () {
       const payload = {
         email: this.email,
         password: this.password
       }
-      this.$store.dispatch('login',payload)
-      .then(({data})=>{
-        localStorage.access_token = data.access_token
-        localStorage.email = data.email
-        localStorage.id = data.id
-        this.$store.dispatch('fetchProducts')
-        this.$router.push('/')
-      })
-      .catch(err=>{
-        console.log(err);
-      })
+      this.$store.dispatch('login', payload)
+        .then(({ data }) => {
+          localStorage.access_token = data.access_token
+          localStorage.email = data.email
+          localStorage.id = data.id
+          this.$store.dispatch('fetchProducts')
+          this.$router.push('/')
+        })
+        .catch(err => {
+          this.$swal(
+            'ERROR',
+            err.response.data.msg,
+            'error'
+          )
+        })
     }
   }
-};
+}
 </script>
 
 <style>

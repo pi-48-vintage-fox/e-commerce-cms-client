@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    title: 'E-Commerce CMS',
+    title: 'OlSHOP',
     products: [],
     product: {},
     categories: [],

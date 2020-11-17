@@ -1,6 +1,6 @@
 <template>
-  <div class="col-3" v-if="product.stock > 0">
-    <div class="card">
+  <div class="col-4" v-if="product.stock > 0">
+    <div class="card mt-5">
       <img class="card-img-top" :src="product.image_url" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title"><a href="#" @click.prevent="detailProduct(product.id)">{{ product.name }}</a></h5>
@@ -27,8 +27,17 @@ export default {
 }
 </script>
 
-<style>
-  img {
-    height: 200px;
+<style scoped>
+  .card::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(127, 143, 166,1.0);
+    z-index: -1;
+    margin-top: 33px;
+    filter: blur(15px);
   }
 </style>

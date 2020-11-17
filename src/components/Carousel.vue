@@ -5,7 +5,7 @@
       <div class="col-6">
         <div class="jumbotron jumbotron-fluid bg-transparent">
             <h1>{{ title }}</h1>
-            <p class="col-10 mt-5 text-justify d-none d-lg-block"></p>
+            <hr>
         </div>
       </div>
       <div class="col-6">
@@ -17,9 +17,6 @@
               <div v-for="banner in banners" :key="banner.id" class="carousel-item">
                 <img class="d-block w-100" :src="banner.image_url" alt="First slide">
               </div>
-              <!-- <div class="carousel-item">
-                <img class="d-block w-100" src="https://ecs7.tokopedia.net/blog-tokopedia-com/uploads/2017/09/Blog-Banner-900x344.jpg" alt="Third slide">
-              </div> -->
             </div>
             <div class="container">
               <div class="row mx-auto">
@@ -70,7 +67,21 @@ export default {
 
 <style scoped>
   .banner{
-    background-color: #ecf0f1;
+    background-color: rgba(220, 221, 225,1.0);
+    height: 433px;
+    padding-top: 68px;
+  }
+  h1 {
+    font-weight: 800;
+    letter-spacing: 33px;
+    color: rgba(34, 47, 62,1.0);
+  }
+  hr {
+    background-color: rgba(232, 65, 24,0.7);
+    padding: 3px;
+    width: 190px;
+    border-radius: 50px;
+    margin-left: 0;
   }
   .fa-angle-left,
   .fa-angle-right {
@@ -79,12 +90,19 @@ export default {
     width: 50px !important;
     padding: 15px;
   }
+  img {
+    height: 200px;
+  }
   .button-slide {
     width: 70px;
     height: 50px;
-    background-color: #00d2d3 !important;
+    background-color: rgba(232, 65, 24,0.7) !important;
     position: absolute;
     bottom: 0;
     left: -15px;
+    transition: .3s;
+  }
+  .button-slide:hover {
+    background-color: rgba(232, 65, 24,1.0) !important;
   }
 </style>

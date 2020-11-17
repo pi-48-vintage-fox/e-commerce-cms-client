@@ -11,6 +11,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  .category-list{
+    width: 100px;
+  }
+  .list-group-item {
+    border: none;
+  }
 </style>

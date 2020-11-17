@@ -9,7 +9,7 @@
         />
       </ul>
   </div>
-    <div class="container mt-5">
+    <div class="container">
       <div class="row">
         <ProductsPage
           v-for="product in products" :key="product.id"
@@ -62,6 +62,9 @@ export default {
 </script>
 
 <style scoped>
+  .container {
+    margin-top: -77px;
+  }
   @media (min-width: 1655px) {
     .categories{
       position: fixed;

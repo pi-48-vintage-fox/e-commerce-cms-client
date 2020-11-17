@@ -429,6 +429,11 @@ export default {
     this.$store.dispatch('getProducts')
     this.$store.dispatch('getCategories')
     this.$store.dispatch('getBanners')
+    if (localStorage.getItem('token')) {
+      this.$store.commit('isLogin', true)
+    } else {
+      this.$router.push('/login')
+    }
   }
 }
 </script>

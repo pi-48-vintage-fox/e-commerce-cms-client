@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/" v-if="loggedIn">Home</router-link><span v-if="loggedIn"> | </span>
       <router-link v-if="!loggedIn" to="/login">Login</router-link>
       <a href="#" id="logout-btn" v-else-if="loggedIn" @click.prevent="logout">Logout</a>
     </div>
@@ -28,6 +28,7 @@ export default {
         if (result.isConfirmed) {
           Swal.fire('Logged Out!', 'Your have been logged out!.', 'success')
           this.$store.dispatch('logout')
+          this.$router.push('/login')
           const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -55,6 +56,9 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch('getProducts')
+    this.$store.dispatch('getCategories')
+    this.$store.dispatch('getBanners')
     if (localStorage.getItem('token')) {
       this.$store.commit('isLogin', true)
     } else {

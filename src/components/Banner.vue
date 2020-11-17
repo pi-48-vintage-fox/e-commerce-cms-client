@@ -114,16 +114,24 @@ export default {
   },
   methods: {
     statusActive () {
-      this.$store.dispatch('changeBannerStatus', {
-        id: this.banner.id,
-        status: 'Active'
-      })
+      if (this.$store.state.loggedIn) {
+        this.$store.dispatch('changeBannerStatus', {
+          id: this.banner.id,
+          status: 'Active'
+        })
+      } else {
+        Swal.fire('Please login first')
+      }
     },
     statusInactive () {
-      this.$store.dispatch('changeBannerStatus', {
-        id: this.banner.id,
-        status: 'Inactive'
-      })
+      if (this.$store.state.loggedIn) {
+        this.$store.dispatch('changeBannerStatus', {
+          id: this.banner.id,
+          status: 'Inactive'
+        })
+      } else {
+        Swal.fire('Please login first')
+      }
     },
     deleteBanner () {
       if (this.$store.state.loggedIn) {

@@ -31,7 +31,7 @@
                 />
               </select>
             </div>
-            <button class="btn btn-primary">Submit</button>
+            <button class="btn btn-primary" type="submit">Submit</button>
           </form>
         </div>
       </div>
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 import EditOptionValue from '../components/EditOptionValue'
 export default {
   name: 'EditProductForm',
@@ -73,6 +74,16 @@ export default {
   methods: {
     editProduct () {
       this.$store.dispatch('editProduct', this.editProductPayload)
+        .then(() => {
+          this.$router.push({ name: 'Main' })
+        })
+        .catch(err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: err.response.data.message + '!'
+          })
+        })
     }
   },
   components: {

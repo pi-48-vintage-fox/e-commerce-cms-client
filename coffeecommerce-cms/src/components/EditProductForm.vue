@@ -52,7 +52,6 @@ export default {
       this.$router.push('/')
     },
     editProduct () {
-      
       this.$store.dispatch('editProduct', { name: this.filteredProduct.name, image_url: this.filteredProduct.image_url, price: +this.filteredProduct.price, stock: +this.filteredProduct.stock, id: this.filteredProduct.id })
         .then((data) => {
           this.$router.push('/')

@@ -22,7 +22,7 @@ export default {
       this.$store.dispatch('deleteProduct', { id })
     },
     filtering (product) {
-      this.$store.commit('FILTER_PRODUCT', product )
+      this.$store.commit('FILTER_PRODUCT', product)
       this.$router.push('/editProduct')
     }
   }

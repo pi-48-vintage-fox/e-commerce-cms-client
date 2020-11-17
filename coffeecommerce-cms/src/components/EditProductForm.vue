@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="editProduct">
     <div>
-      <input type="text" :placeholder="product.name" required="required" v-model="name" />
+      <input type="text" required="required" v-model="filteredProduct.name" />
     </div>
     <br />
     <div>
@@ -9,13 +9,12 @@
         type="text"
         placeholder="Product Image"
         required="required"
-        :placeholder="product.image_url"
-        v-model="image_url"
+        v-model="filteredProduct.image_url"
       />
     </div>
     <br />
     <div>
-      <input type="number" :placeholder="product.price" required="required" v-model="price" />
+      <input type="number" required="required" v-model="filteredProduct.price" />
     </div>
     <br />
     <div>
@@ -23,8 +22,7 @@
         type="number"
         placeholder="Stock Available"
         required="required"
-        :placeholder="+product.stock"
-        v-model="stock"
+        v-model="filteredProduct.stock"
       />
     </div>
     <br />
@@ -43,7 +41,6 @@ export default {
   name: 'EditForm',
   data () {
     return {
-      name: '',
       image_url: '',
       price: '',
       stock: ''
@@ -55,7 +52,8 @@ export default {
       this.$router.push('/')
     },
     editProduct () {
-      this.$store.dispatch('editProduct', { name: this.name, image_url: this.image_url, price: +this.price, stock: +this.stock, id: this.product.id })
+      
+      this.$store.dispatch('editProduct', { name: this.filteredProduct.name, image_url: this.filteredProduct.image_url, price: +this.filteredProduct.price, stock: +this.filteredProduct.stock, id: this.filteredProduct.id })
         .then((data) => {
           this.$router.push('/')
         })
@@ -63,6 +61,11 @@ export default {
           console.log(err)
           this.errorMessage = err
         })
+    }
+  },
+  computed: {
+    filteredProduct () {
+      return this.$store.state.filtered
     }
   }
 }

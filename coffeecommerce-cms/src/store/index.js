@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     products: [],
-    filtered: []
+    filtered: {}
   },
   mutations: {
     SET_PRODUCTS (state, productLists) {
@@ -24,7 +24,7 @@ export default new Vuex.Store({
       axios({
         method: 'GET',
         url: '/products',
-        headers: { accessToken }
+        headers: { access_token: accessToken }
       })
         .then(({ data }) => {
           console.log(data, 'fetch')
@@ -34,29 +34,29 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    filterProduct (context, payload) {
-      // linter mengatakan access token harus dalam camel case
-      const accessToken = localStorage.getItem('access_token')
+    // filterProduct (context, payload) {
+    //   // linter mengatakan access token harus dalam camel case
+    //   const accessToken = localStorage.getItem('access_token')
 
-      axios({
-        method: 'GET',
-        url: `/products/filter/${payload.product.id}`,
-        headers: { accessToken }
-      })
-        .then(({ data }) => {
-          console.log(data)
-          context.commit('FILTER_PRODUCT', data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
+    //   axios({
+    //     method: 'GET',
+    //     url: `/products/filter/${payload.product.id}`,
+    //     headers: { access_token: accessToken }
+    //   })
+    //     .then(({ data }) => {
+    //       console.log(data[0].name)
+    //       context.commit('FILTER_PRODUCT', data)
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // },
     deleteProduct ({ dispatch }, payload) {
       const accessToken = localStorage.getItem('access_token')
       axios({
         method: 'DELETE',
         url: `/products/+${payload.id}`,
-        headers: { accessToken }
+        headers: { access_token: accessToken }
       })
         .then(({ data }) => {
           dispatch('fetchProducts')
@@ -70,7 +70,7 @@ export default new Vuex.Store({
       return axios({
         method: 'POST',
         url: '/products/addproduct',
-        headers: { accessToken },
+        headers: { access_token: accessToken },
         data: {
           name: payload.name,
           image_url: payload.image_url,
@@ -90,7 +90,7 @@ export default new Vuex.Store({
       return axios({
         method: 'PUT',
         url: `/products/${payload.id}`,
-        headers: { accessToken },
+        headers: { access_token: accessToken },
         data: {
           name: payload.name,
           image_url: payload.image_url,
@@ -115,7 +115,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data.access_token)
+          // console.log(data.access_token)
           localStorage.setItem('access_token', data.access_token)
           localStorage.setItem('username', data.name)
           localStorage.setItem('role', data.role)

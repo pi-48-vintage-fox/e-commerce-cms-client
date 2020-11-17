@@ -1,6 +1,6 @@
 <template>
   <div class="card" style="width: 18rem;">
-    <img class="card-img-top" :src="'product.image_url'" alt="Card image cap">
+    <img class="card-img-top" :src="product.image_url" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">{{product.name}}</h5>
       <p class="card-text">Available Stock : {{product.stock}}</p>
@@ -22,7 +22,7 @@ export default {
       this.$store.dispatch('deleteProduct', { id })
     },
     filtering (product) {
-      this.$store.dispatch('filterProduct', { product })
+      this.$store.commit('FILTER_PRODUCT', product )
       this.$router.push('/editProduct')
     }
   }

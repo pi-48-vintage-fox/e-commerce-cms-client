@@ -1,7 +1,7 @@
 <template>
    <div class="mt-3">
     <h1 class="text-white">Edit Product Detail</h1>
-    <EditForm :product="$store.state.filtered[0]"></EditForm>
+    <EditForm></EditForm>
   </div>
 </template>
 

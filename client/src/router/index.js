@@ -65,9 +65,13 @@ router.beforeEach((to, from, next) => {
   // kalo blm ada token mau ke home, langsung diarahin ke login
   // kalo udh ada token dan bukan ke login, langsung ke router tujuan
 
-  if (to.path === '/login' && localStorage.getItem('access_token')) next({ name: 'Home' })
-  else if (to.path === '/' && !localStorage.getItem('access_token')) next({ name: 'login' })
-  else next()
+  const accessToken = localStorage.getItem('access_token')
+
+  routes.map(el => {
+    if (to.path === el.path && el.path !== '/login' && !accessToken) next({ name: 'login' })
+    else if (to.path === '/login' && accessToken) next({ name: 'Home' })
+    else next()
+  })
 
   // if (to.path !== '/' && !localStorage.access_token) next({ name: 'Home' })
   // else if (to.path === '/' && localStorage.access_token) next({ name: 'Dashboard' })

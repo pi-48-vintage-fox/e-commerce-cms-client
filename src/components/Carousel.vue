@@ -68,7 +68,7 @@ export default {
 <style scoped>
   .banner{
     background-color: rgba(220, 221, 225,1.0);
-    height: 433px;
+    height: 533px;
     padding-top: 68px;
   }
   h1 {

@@ -4,9 +4,9 @@
       <img class="card-img-top" :src="product.image_url" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title"><a href="#" @click.prevent="detailProduct(product.id)">{{ product.name }}</a></h5>
-        <p class="card-text">
-          <span class="badge badge-primary">{{ product.Category.name }}</span>
-        </p>
+          <a href="" class="btn btn-info card-text">Add to cart</a>
+          <span class="badge badge-primary ml-5 card-text">{{ product.Category.name }}</span>
+          <p class="card-text mt-3">{{product.stock}}</p>
       </div>
       <div class="card-footer">
         <p class="card-text">{{ product.price }}</p>
@@ -36,8 +36,8 @@ export default {
     height: 100%;
     width: 100%;
     background: rgba(127, 143, 166,1.0);
-    z-index: -1;
     margin-top: 33px;
     filter: blur(15px);
+    z-index: -1;
   }
 </style>

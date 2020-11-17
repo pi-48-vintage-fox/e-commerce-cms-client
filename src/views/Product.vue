@@ -1,6 +1,6 @@
 <template>
   <div class="product">
-    <Carousel/>
+    <Carousel class="carousel"/>
     <div class="categories mt-5">
       <ul class="list-group">
         <CategoriesList
@@ -11,7 +11,7 @@
   </div>
     <div class="container">
       <div class="row">
-        <ProductsPage
+        <ProductsPage class="product"
           v-for="product in products" :key="product.id"
           :product="product"
         />
@@ -63,7 +63,10 @@ export default {
 
 <style scoped>
   .container {
-    margin-top: -77px;
+    margin-top: -177px;
+  }
+  .product {
+    z-index: 1;
   }
   @media (min-width: 1655px) {
     .categories{

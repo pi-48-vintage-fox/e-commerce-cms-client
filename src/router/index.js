@@ -12,6 +12,7 @@ import ProductDashboard from '../views/ProductDashboard.vue'
 import CategoryDashboard from '../views/CategoryDashboard'
 import EditProduct from '../components/EditProduct.vue'
 import BannerDashboard from '../views/BannerDashboard.vue'
+import Cart from '../views/Cart.vue'
 
 Vue.use(VueRouter)
 
@@ -35,6 +36,11 @@ const routes = [
     path: '/',
     name: 'Product',
     component: Product
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart
   },
   {
     path: '/dashboard',

@@ -42,5 +42,7 @@ export default {
 </script>
 
 <style>
-
+  .list-category {
+    margin-top: 133px;
+  }
 </style>

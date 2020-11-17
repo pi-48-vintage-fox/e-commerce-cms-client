@@ -10,7 +10,8 @@ export default new Vuex.Store({
     products: [],
     product: {},
     categories: [],
-    banners: []
+    banners: [],
+    carts: []
   },
   mutations: {
     getProducts (state, payload) {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     getBanners (state, payload) {
       state.banners = payload
+    },
+    getCarts (state, payload) {
+      state.carts = payload
     }
   },
   actions: {
@@ -51,22 +55,6 @@ export default new Vuex.Store({
           price: payload.price,
           stock: payload.stock,
           CategoryId: payload.CategoryId
-        },
-        headers: {
-          access_token: accessToken
-        }
-      })
-    },
-    addCheckout (context, payload) {
-      const accessToken = localStorage.getItem('access_token')
-      return axios({
-        url: '/checkout',
-        method: 'POST',
-        data: {
-          name: payload.name,
-          address: payload.address,
-          ProductId: payload.ProductId,
-          qty: payload.qty
         },
         headers: {
           access_token: accessToken
@@ -170,6 +158,35 @@ export default new Vuex.Store({
         method: 'DELETE',
         headers: {
           access_token: localStorage.getItem('access_token')
+        }
+      })
+    },
+    fetchCart (context) {
+      const accessToken = localStorage.getItem('access_token')
+      axios({
+        url: '/cart',
+        method: 'GET',
+        headers: {
+          access_token: accessToken
+        }
+      })
+        .then(({ data }) => {
+          context.commit('getCarts', data)
+        })
+        .catch(console.log)
+    },
+    addCart (context, payload) {
+      const accessToken = localStorage.getItem('access_token')
+      console.log(payload, '<< store')
+      return axios({
+        url: '/cart',
+        method: 'POST',
+        headers: {
+          access_token: accessToken
+        },
+        data: {
+          ProductId: payload.ProductId,
+          qty: +payload.qty
         }
       })
     }

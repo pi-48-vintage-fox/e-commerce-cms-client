@@ -412,6 +412,8 @@ export default {
       }
     },
     categories () {
+      this.$store.dispatch('getCategories')
+      console.log(this.$store.state.categories)
       return this.$store.state.categories
     },
     banners () {
@@ -425,9 +427,9 @@ export default {
       }
     }
   },
-  created () {
-    this.$store.dispatch('getProducts')
+  mounted () {
     this.$store.dispatch('getCategories')
+    this.$store.dispatch('getProducts')
     this.$store.dispatch('getBanners')
     if (localStorage.getItem('token')) {
       this.$store.commit('isLogin', true)

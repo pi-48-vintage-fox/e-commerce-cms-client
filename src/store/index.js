@@ -9,7 +9,8 @@ export default new Vuex.Store({
     loggedIn: false,
     products: [],
     banners: [],
-    editProductValue: {}
+    editProductValue: {},
+    categories: ''
   },
   mutations: {
     isLogin (state, payload) {
@@ -164,7 +165,6 @@ export default new Vuex.Store({
       })
     },
     editProduct (context, payload) {
-      console.log('ssampe')
       return axios({
         method: 'PUT',
         url: '/products/' + payload.id,

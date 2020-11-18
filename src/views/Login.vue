@@ -44,7 +44,11 @@ export default {
         .then(({ data }) => {
           localStorage.setItem('access_token', data.access_token)
           localStorage.setItem('role', data.role)
-          this.$router.push({ name: 'Product' })
+          if (data.role === 'admin') {
+            this.$router.push({ name: 'Dashboard' })
+          } else if (data.role === 'customer') {
+            this.$router.push({ name: 'Product' })
+          }
           location.reload()
         })
         .catch(err => {

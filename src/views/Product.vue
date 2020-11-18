@@ -57,6 +57,14 @@ export default {
   created () {
     this.fetchProducts()
     this.fetchCategories()
+  },
+  beforeRouteEnter (to, from, next) {
+    const role = localStorage.getItem('role')
+    if (role === 'admin') {
+      next('/dashboard')
+    } else {
+      next()
+    }
   }
 }
 </script>

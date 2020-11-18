@@ -17,7 +17,7 @@
             <li v-if="access_token" class="nav-item">
               <a href="/" @click="logout" class="nav-link">Logout</a>
             </li>
-            <li class="nav-item">
+            <li v-if="role === 'customer'" class="nav-item">
               <router-link to="/cart"  class="nav-link">Cart</router-link>
             </li>
           </ul>

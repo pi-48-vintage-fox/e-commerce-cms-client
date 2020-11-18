@@ -177,7 +177,6 @@ export default new Vuex.Store({
     },
     addCart (context, payload) {
       const accessToken = localStorage.getItem('access_token')
-      console.log(payload, '<< store')
       return axios({
         url: '/cart',
         method: 'POST',

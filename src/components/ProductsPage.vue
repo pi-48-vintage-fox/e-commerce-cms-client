@@ -4,7 +4,7 @@
       <img class="card-img-top" :src="product.image_url" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title"><a href="#" @click.prevent="detailProduct(product.id)">{{ product.name }}</a></h5>
-          <a href="" class="btn btn-info card-text">Add to cart</a>
+          <a href="" @click.prevent="addToCart(product.id)" class="btn btn-info card-text">Add to cart</a>
           <span class="badge badge-primary ml-5 card-text">{{ product.Category.name }}</span>
           <p class="card-text mt-3">{{product.stock}}</p>
       </div>
@@ -22,6 +22,17 @@ export default {
   methods: {
     detailProduct (id) {
       this.$router.push({ name: 'Detail', params: { id } })
+    },
+    addToCart (id) {
+      const payload = {
+        ProductId: id,
+        qty: 1
+      }
+      this.$store.dispatch('addCart', payload)
+        .then(({ data }) => {
+          console.log(data)
+        })
+        .catch(console.log)
     }
   }
 }

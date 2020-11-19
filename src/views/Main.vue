@@ -7,8 +7,8 @@
           <h3><b>Categories</b></h3>
           <ul class="overflow-auto">
             <Category
-              v-for="category in categories"
-              :key="category.id"
+              v-for="(category, i) in categories"
+              :key="i"
               :category="category"
               @showProducts="showProducts"
               @chose="choseCategory"
@@ -412,8 +412,6 @@ export default {
       }
     },
     categories () {
-      this.$store.dispatch('getCategories')
-      console.log(this.$store.state.categories)
       return this.$store.state.categories
     },
     banners () {
@@ -425,16 +423,6 @@ export default {
       } else {
         return ''
       }
-    }
-  },
-  mounted () {
-    this.$store.dispatch('getCategories')
-    this.$store.dispatch('getProducts')
-    this.$store.dispatch('getBanners')
-    if (localStorage.getItem('token')) {
-      this.$store.commit('isLogin', true)
-    } else {
-      this.$router.push('/login')
     }
   }
 }

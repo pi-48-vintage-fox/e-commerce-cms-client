@@ -75,6 +75,7 @@ export default {
     editProduct () {
       this.$store.dispatch('editProduct', this.editProductPayload)
         .then(() => {
+          this.$store.dispatch('getProducts')
           this.$router.push({ name: 'Main' })
         })
         .catch(err => {

@@ -42,7 +42,8 @@ export default {
       }
       this.$store.dispatch('login', payload)
         .then(() => {
-          this.$router.push({ path: '/Product' })
+          console.log('bla bla')
+          
         })
         .catch((err) => {
           console.log(err)

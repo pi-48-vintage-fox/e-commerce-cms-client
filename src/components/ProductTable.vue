@@ -5,7 +5,7 @@
   </router-link><br>
   <div class="row no-gutters" v-for="item in products" :key="item.id">
     <div class="col-md-4">
-      <img :src="`${item.image_url}`" class="card-img" >
+      <img :src="`${item.image_url}`" class="card-img">
     </div>
     <div class="col-md-8">
       <div class="card-body">

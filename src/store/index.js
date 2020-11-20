@@ -29,7 +29,12 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           // console.log(data)
+          console.log('blabla')
           localStorage.setItem('access_token', data.access_token)
+          router.push({ path: '/Product' })
+        })
+        .catch(err =>{
+          console.log(err)
         })
     },
     fetchProduct (context) {
@@ -41,6 +46,7 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
+          router.push({ path: '/Product' })
           context.commit('FETCHPRODUCT', data)
         })
         .catch(err => {
